@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,english,twoside]{book}
+\documentclass[12pt,a4paper,twoside]{book}
 \usepackage[german,english]{babel}
 \usepackage[T1]{fontenc} 
 \usepackage[latin1]{inputenc}
@@ -19,6 +19,15 @@
 \usepackage{float}
 \usepackage{url}
 \usepackage{unizhdt}
+\usepackage{pdflscape}
+
+% custom packages
+\usepackage{pifont} % checkmark and xmark symbols
+
+% commands
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -36,14 +45,14 @@
 \author{Bachmann Simon \\ Brasser Claudio \\ Bucher Michael \\ Spielmann Nicolas }
 % Define the city and country of the author
 \authorcity{Z\"urich, Switzerland}
-% Define the student ID (Matrikelnummer)
-\studentid{00-711-999}
+% Define the student IDs (Matrikelnummer)
+\studentid{14-709-893, }
 % Define the title with optional subtitle
 \title{Design and Prototypical Implementation of Blockchain Ticketing}
 % Define the supervisors
 \supervisors{Sina Rafati}
 % Define the submission date
-\submissiondate{January 1, 2006}
+\submissiondate{\today}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -66,7 +75,7 @@
 \cleardoublepage
 \pagenumbering{arabic}
 \input{introduction.tex}
-\input{relatedwork.tex}
+\input{related-work/index.tex}
 \input{main.tex}
 %\input{.tex}
 %\input{.tex}

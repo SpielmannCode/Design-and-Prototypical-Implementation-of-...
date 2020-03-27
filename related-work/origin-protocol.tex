@@ -1,0 +1,35 @@
+% author: Simon Bachmann
+
+\section{Origin Protocol}
+Origin Protocol is a platform for building decentralised marketplaces without the traditional intermediaries. It provides a set of tools for building such applications more securely and with less overhead. The main target of Origin Protocol is the sharing economy. However, many concepts and processes for building a decentralized ticketing platform align with those of a decentralized sharing economy. Thus, making it relevant for this project.
+
+The protocol is open-source and consists of a collection of smart contracts and npm packages that allow developers to build decentralised marketplaces. These packages abstract the complexity of the Ethereum blockchain and contain functionalities around transactions, identity management, p2p messaging, p2p storage and governance.
+
+\paragraph{Identity}
+A user becomes more trustworthy when he verifies accounts from other platforms such as Twitter, Airbnb etc. Origin provides a bridge server who validates such accounts as well as mobile phone numbers and emails. These attestations are then uploaded to IPFS and stores the hash on the Ethereum blockchain. 
+Using other platforms to increase the authenticity of an user has the advantage that no complex, additional verification service must be implemented. 
+For example, Origin can benefit from the fact that Airbnb checks the passport of every host on their platform. Thus, a user cannot create multiple accounts. Origin implicitly gains this feature almost for free by letting the user copy a unique string into their public Airbnb profile which is then verified by the Origin bridge server.
+The disadvantage is, that they do not have access to the passport if a fraudulent user must be punished and there is no certainty that Airbnb discloses that information.
+
+\paragraph{Storage}
+Origin uses IPFS for storing all the metadata that is linked to a user profile or a marketplace listing. This reduces the transaction costs on the Ethereum blockchain while only storing the IPFS hash on-chain. The benefit of using IPFS is that the application does not rely on a single server to host the metadata files. 
+
+\paragraph{UX}
+During the identity registration process, the user is able to verify his mobile phone number, email and other accounts without paying gas for the transactions. This allows the user to experience the application almost as a traditional web/mobile application. This is made possible due the Gas Station Network which allows an account to pay for the transactions costs of another account. Only a signed message by the user’s account is needed. 
+
+\paragraph{Governance}
+A feature that is not implemented but on the roadmap is governance. This is necessary when a user issues a complaint on the platform. This can occur when a user does not receive the correct product or a renter of a property leaves damaged inventory. If the two involved parties are not able to solve the issue themselves, the complaint can be forwarded to a committee of Origin token holders. These are independent entities and will vote on the outcome of the complaint. Users on the platform must deposit an amount of ETH when creating a listing or making an offer. This deposit will be used to compensate for the caused damage as well as a fraction will be paid out to the committee.
+Mobile application: Although Origin Protocol has developed an iOS and Android application with ReactNative, the user must copy his private key into the app if he previously signed up on the web application. If every mobile app was designed in such a way, the user would be exposed to the complexity of asymmetric cryptography with every app he uses. However, if the user signed up on the web application before, it is possible to access 
+
+\paragraph{Conclusion}
+Origin is designed to offer a marketplace for a broad range of goods and services and not specific to ticketing. The platform is mostly aimed for C2C businesses (sharing economy). For the ticketing industry where B2C model is more prominent, the UX could be greatly improved with a different architectural design specific for ticketing.
+
+However, Origin's aim to decentralize as many parts of its protocol as possible should be used as an inspiration for this project. The solution how Origin establishes trust between unknown peers is unique and can be useful for a ticketing platform as well. 
+
+The verification process through Airbnb guarantees that a user cannot create two profiles and this could be useful for identifying event guests. The verification method for social media profiles such as twitter might not be secure enough for event guests, however, the authenticity of an event host increases when he can prove that he is the owner of a well known twitter account. 
+This could be a crucial method for preventing fraudulent events.
+
+Although the protocol supports multiple currencies including stablecoins, no fiat currency gateway is incorporated in the application. This is desirable because the majority of people is not comfortable using crypto currencies.
+
+It is preferable that a user can set up an Ethereum account on mobile once and use it across multiple applications. Thus, using a web3-enabled mobile browser such as Metamask Mobile with a web application optimized for mobile makes more sense.
+
