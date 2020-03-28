@@ -2,7 +2,9 @@
 
 Features that are not in the table yet:
 \begin{itemize}
-    \item Fee structure
+    \item token for ID
+    \item Event spam prevention
+    \item Mechanism to prevent fake events
     \item 
 \end{itemize}
 
@@ -13,31 +15,34 @@ Features that are not in the table yet:
 \begin{table}[]
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
 \hline
-                                        & Blocktix & GUTS & Aventus & Blockparty & SecuTix & Crypto Tickets & Citizen Ticket & Origin Protocol                    \\ \hline
-Blockchain                              &          &      &         &            &         &                &                & Ethereum                           \\ \hline
-Form of linked identity                 &          &      &         &            &         &                &                & social profiles                    \\ \hline
-Resell possible?                        &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Mechanism for presale                   &          &      &         &            &         &                &                & \xmark                                  \\ \hline
-What currency is used?                  &          &      &         &            &         &                &                & ETH/DAI/USDT/OGN                   \\ \hline
-Stablecoin integration?                 &          &      &         &            &         &                &                & \cmark                             \\ \hline
-Fiat currency gateway?                  &          &      &         &            &         &                &                & \xmark                                  \\ \hline
-Can ticket be sold for less?            &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Can ticket be sold for more?            &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Multiple tickets on account? &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Metadata storage *1                       &          &      &         &            &         &                &                & IPFS                               \\ \hline
-Escrow account *2                          &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Mobile app available                    &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Web app available                       &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-Where is the private key?               &          &      &         &            &         &                &                & user                               \\ \hline
-Who pays for transaction fees?          &          &      &         &            &         &                &                & platform/user                      \\ \hline
-Affiliate marketing                     &          &      &         &            &         &                &                & \xmark                                  \\ \hline
-Fraud prevention?                       &          &      &         &            &         &                &                & reviews, social profiles \\ \hline
-Deposit for hosting an event?           &          &      &         &            &         &                &                & \cmark                                  \\ \hline
-How are tickets invalidated?            &          &      &         &            &         &                &                & -                                  \\ \hline
-Does it preserve privacy? How?          &          &      &         &            &         &                &                & \xmark                                  \\ \hline
-Fee structure                           &          &      &         &            &         &                &                & payed promos services      \\ \hline
+                               & Blocktix    & GUTS & Aventus & Blockparty & SecuTix & Crypto Tickets & Citizen Ticket & Origin Protocol          \\ \hline
+Blockchain                     & Ethereum    &      &         &            &         &                &                & Ethereum                 \\ \hline
+Native token                   & TIX         &      &         &            &         &                &                & OGN                      \\ \hline
+Form of linked identity        & xmark       &      &         &            &         &                &                & social profiles          \\ \hline
+Resell possible?               & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Mechanism for presale          & cmark       &      &         &            &         &                &                & xmark                    \\ \hline
+What currency is used?         & ETH         &      &         &            &         &                &                & ETH,DAI,USDT,OGN         \\ \hline
+Stablecoin integration?        & xmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Fiat currency gateway?         & xmark       &      &         &            &         &                &                & xmark                    \\ \hline
+Event spam prevention          & cmark       &      &         &            &         &                &                & -                        \\ \hline
+Can ticket be sold for less?   & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Can ticket be sold for more?   & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Multiple tickets on account?   & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Metadata storage *1            & IPFS        &      &         &            &         &                &                & IPFS                     \\ \hline
+Escrow account *2              & xmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Mobile app available           & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Web app available              & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+User controls private key      & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Who pays for transaction fees? & user        &      &         &            &         &                &                & platform,user            \\ \hline
+Affiliate marketing            & xmark       &      &         &            &         &                &                & xmark                    \\ \hline
+Fraud prevention?              & cmark       &      &         &            &         &                &                & reviews,social profiles \\ \hline
+Deposit for hosting an event?  & cmark       &      &         &            &         &                &                & cmark                    \\ \hline
+Off-chain ticket validation    & x-mark      &      &         &            &         &                &                & -                        \\ \hline
+Does it preserve privacy?      & x-mark      &      &         &            &         &                &                & xmark                    \\ \hline
+Fee structure                  & paid promos &      &         &            &         &                &                & paid promos              \\ \hline
 \end{tabular}
 \end{table}
+
 \end{landscape}
 
 *1 Where is the meta data for a ticket/event stored such as seat number? (Usually not stored on the blockchain as metadata is expensive.)
