@@ -1,7 +1,7 @@
 % author: Nicolas Spielmann
 
 \section{Guts}
-Guts is a company from the Netherlands. They are using the Guaranteed Entrance Token(GET) developed by the GET Foundation. The main goal of Guts is to prevent a secondary black market. By making the ticket bound to a smart contract, they only allow the tickets to be resold over the smart contract at a predetermined price, therefore making it impossible to resell a ticket with a markup.
+Guts \cite{GET_PROTOCOL} is a company from the Netherlands. They are using the Guaranteed Entrance Token(GET) developed by the GET Foundation. The main goal of Guts is to prevent a secondary black market. By making the ticket bound to a smart contract, they only allow the tickets to be resold over the smart contract at a predetermined price, therefore making it impossible to resell a ticket with a markup.
 
 \paragraph{Identity}
 Whenever a user is registering at Guts, he needs to verify his phone number and register an account. The identity of the user is linked to his phone number. Guts then creates a Ethereum wallet for every user. However, the private key of this wallet is not provided to the end user, but rather stored by Guts. There is no way for the user to get access to his Ethereum wallet. 
@@ -11,14 +11,20 @@ Whenever a user is registering at Guts, he needs to verify his phone number and 
 Guts stores all their data on their own servers. The tickets themselves are stored on the Ethereum block chain. All change of ownership are protocolled on the block chain. During the validation of the ticket when entering the venue, the validation of the tickets is done of chain, because the entrance control needs to be very fast and Guts does not yet believe, that the Ethereum block chain is able to handle such a high load of transactions.
 
 \paragraph{Ticket Validation}
+Guts is using a special QR-Code, that is not static but rather defined by a function dependent on owner an time. This results in a constantly changing QR-Code, that does not allow the code to just be taken a screen shot of it and forwarded to another person. This makes sure, the ticket can only be exchanged over the smart contract. When entering the venue, the current QR-Code in the app is scanned and validated on the server of Guts, since the block chain would not be able to handle a lot of validation transactions.
 
 
 \paragraph{Ticket Transfer}
+Whenever a user wants to sell his ticket, it is resold over the smart contract over the block chain. The smart contract locks the price of the ticket. Therefore, the ticket can not be sold for a higher price, thus not allowing anybody to profit from buying more ticket than needed, since they can not be resold with margin. 
 
 
 \paragraph{UX}
+The user experience seam to be pretty seamless. However there are some issues with the current state they are in. For example, their sandbox app referenced in their white paper does not allow any more interaction than creating an account and verifying your phone number. Currently, there is no way to simulate an purchase of a ticket.  
 
 
 \paragraph{GET Token}
+The GET Token was issued in an ICO. The Token has to be used by an event host to create tickets. The Token is also used whenever the ticket is changing owner. This can be seen as a way of fraud prevention, since the creator has to upfront invest at least 0.50€ per ticket to initially create the tickets. However, this upfront cost will late be added as a fee on the final ticket price.
+
 
 \paragraph{Conclusion}
+Guts main intention is to prevent the secondary ticket market that gains money from ticket sale without providing value to the  end user. They accomplish this by making the ticket only resalable over their smart contract. However, their sandbox is currently not working anymore and there is currently no event listed, where their app can be used to purchase a ticket. They also assume, that the mobile phone number is enough identity control to prevent fraudulent behaviour. They also heavily rely on their of chain server to accomplish the validity check of the ticket when entering a venue. Therefor, their solution is not in every phase a truly decentralized one.  

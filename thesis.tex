@@ -20,6 +20,7 @@
 \usepackage{url}
 \usepackage{unizhdt}
 \usepackage{pdflscape}
+\usepackage[numbers]{natbib}
 
 % custom packages
 \usepackage{pifont} % checkmark and xmark symbols
@@ -76,14 +77,17 @@
 \pagenumbering{arabic}
 \input{introduction/index}
 \input{related-work/index}
-\input{security-risks/index}
+%\input{security-risks/index}
 \input{design/index}
 %\input{.tex}
 %\input{.tex}
 \input{evaluation/index}
 \input{summary/index}
 
-\input{bibliography.tex}
+%/ \input{bibliography.tex}
+
+\bibliographystyle{IEEEtranN}
+\bibliography{bibliography}
 
 \input{abbreviations.tex}
 \input{glossary.tex}
