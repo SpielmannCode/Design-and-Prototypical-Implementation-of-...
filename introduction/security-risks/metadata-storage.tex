@@ -1,0 +1,9 @@
+% author: Simon Bachmann
+
+\subsection{Location-Based Addressing for Metadata Storage}\label{subsection:metadata-storage}
+
+Storing data on a blockchain is expensive since every node in the network creates a copy of that data on its machine. Thus, many decentralized applications only store the hashes of files on the blockchain while storing the actual meta-data file somewhere else. With this design, it is possible to check whether the actual file was modified because any change in the file would result in a different hash. However, if the actual file is lost, the data cannot be reconstructed from the hash and is permanently lost. Thus, redundancy and availability play important roles when designing a decentralized application.
+
+It is desired to only store the information on-chain which is relevant to the functionality of the smart contract. Meta-data such as event details that are not relevant for any of the methods in the smart contract must no be stored on-chain.
+
+However, storing a meta-data file on a server is not an ideal solution since the location of the server can change or even no longer exist. Even if the file was replicated on a different machine, the nodes in the network do not know where the new location is, if the smart contract does not keep a list of all the hosts. Thus, location-based addressing for meta-data is therefore prone to censorship and loss of data. 

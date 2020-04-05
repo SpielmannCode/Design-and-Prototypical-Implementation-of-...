@@ -12,33 +12,34 @@ Features that are not in the table yet:
 \begin{table}[]
 \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
 \hline
-                                & Blocktix       & GUTS              & Aventus      & Blockparty    & Citizen Ticket    & Origin Protocol       \\ \hline
-Blockchain                      & Ethereum       & Ethereum          & Ethereum     & Ethereum      &                   & Ethereum                \\ \hline
-Native token                    & TIX            & GET               & AVT          & BOXX          &                   & OGN                     \\ \hline
-Form of linked identity         & \xmark         & \cmark            &              & \cmark        &                   & social profiles         \\ \hline
-Resell possible?                & \cmark         & \cmark            & \cmark       & \cmark        &                   & \cmark                   \\ \hline
-Mechanism for presale           & \cmark         & \xmark            & \xmark       & \xmark        &                   & \xmark                   \\ \hline
-What currency is used?          & ETH            & ETH, GET, Fiat    &              & Fiat, BOXX    &                   & \begin{tabular}[c]{@{}c@{}}ETH,DAI,\\ USDT,OGN\end{tabular}\\ \hline  
-Stablecoin integration?         & \xmark         & \xmark            & \xmark       & \xmark        &                   & \cmark                   \\ \hline
-Fiat currency gateway?          & \xmark         & \xmark            & \xmark       & \xmark        &                   & \xmark                   \\ \hline
-Fiat gateway provider           & -              &                   & \xmark       & \xmark        &                   & paid promos             \\ \hline
-Event spam prevention           & \cmark         & \xmark            & \cmark       &               &                   & -                       \\ \hline
-Can ticket be sold for less?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        &                   & \cmark                   \\ \hline
-Can ticket be sold for more?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        &                   & \cmark                   \\ \hline
-Multiple tickets on account?    & \cmark         & \cmark            & \cmark       & \cmark        &                   & \cmark                   \\ \hline
-Metadata storage *1             & IPFS           & own Server        &              & IPFS          &                   & IPFS                    \\ \hline
-Escrow account *2               & \xmark         &                   &              & \xmark        &                   & \cmark                   \\ \hline
-Mobile app available            & \cmark         & \cmark            & \xmark       & \cmark        &                   & \cmark                   \\ \hline
-Web app available               & \cmark         & \cmark            &  \xmark      & \cmark        &                   & \cmark                   \\ \hline
-User controls private key       & \cmark         & \xmark            &  \cmark      & not clear     &                   & \cmark                   \\ \hline
-Who pays for transaction fees?  & user           &  user             &  user        &               &                   & platform,user           \\ \hline
-Affiliate marketing             & \xmark         &                   &  \cmark      &               &                   & \xmark                   \\ \hline
-Fraud prevention?               & \cmark         & \cmark            &  \cmark      & \cmark        &                   & \begin{tabular}[c]{@{}c@{}}review,\\ social profiles\end{tabular}\\ \hline
-Deposit for hosting an event?   & \cmark         & \cmark            & \cmark       &               &                   & \cmark                   \\ \hline
-Off-chain ticket validation     & \xmark         & \cmark            &              &               &                   & -                       \\ \hline
-Does it preserve privacy?       & \xmark         & \xmark            & \cmark       &               &                   & \xmark                   \\ \hline
-Fee structure                   & paid promos    &                   &              &               &                   & paid promos             \\ \hline
-Second layer for scalablity?    & \xmark         &                   & \cmark       & \xmark        &                   & paid promos               \\ \hline
+                                & \textbf{Blocktix}& \textbf{GUTS}   & \textbf{Aventus}& \textbf{Blockparty} & \textbf{Origin Protocol}       \\ \hline
+Blockchain                      & Ethereum       & Ethereum          & Ethereum     & Ethereum      & Ethereum                \\ \hline
+Native token                    & TIX            & GET               & AVT          & BOXX          & OGN                     \\ \hline
+Form of linked identity         & \xmark         & \cmark            &              & \cmark        & social profiles         \\ \hline
+Resell possible?                & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
+Mechanism for presale           & \cmark         & \xmark            & \xmark       & \xmark        & \xmark                   \\ \hline
+What currency is used internally?          & ETH            & ETH, GET, Fiat    &              & Fiat, BOXX    & \begin{tabular}[c]{@{}c@{}}ETH,DAI,\\ USDT,OGN\end{tabular}\\ \hline
+End user payment currency?      & ETH            & Fiat              &              &               & -                         \\ \hline  
+Stablecoin integration?         & \xmark         & \xmark            & \xmark       & \xmark        & \cmark                   \\ \hline
+Fiat currency gateway?          & \xmark         & \xmark            & \xmark       & \xmark        & \xmark                   \\ \hline
+Fiat gateway provider           & -              & ?                 & \xmark       & \xmark        & paid promos             \\ \hline
+Event spam prevention           & \cmark         & \xmark            & \cmark       &               & -                       \\ \hline
+Can ticket be sold for less?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        & \cmark                   \\ \hline
+Can ticket be sold for more?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        & \cmark                   \\ \hline
+Multiple tickets on account?    & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
+Metadata storage *1             & IPFS           & own Server        &              & IPFS          & IPFS                    \\ \hline
+Escrow account *2               & \xmark         &  ?                &              & \xmark        & \cmark                   \\ \hline
+Mobile app available            & \cmark         & \cmark            & \xmark       & \cmark        & \cmark                   \\ \hline
+Web app available               & \cmark         & \cmark            &  \xmark      & \cmark        & \cmark                   \\ \hline
+User controls private key       & \cmark         & \xmark            &  \cmark      & not clear     & \cmark                   \\ \hline
+Who pays for transaction fees?  & user           &  user             &  user        &               & platform,user           \\ \hline
+Affiliate marketing             & \xmark         & ?                 &  \cmark      &               & \xmark                   \\ \hline
+Fraud prevention?               & \cmark         & \cmark            &  \cmark      & \cmark        & \begin{tabular}[c]{@{}c@{}}reviews,\\ social profiles\end{tabular}\\ \hline
+Deposit for hosting an event?   & \cmark         & \cmark            & \cmark       &               & \cmark                   \\ \hline
+Off-chain ticket validation     & \xmark         & \cmark            &              &               & -                       \\ \hline
+Does it preserve privacy?       & \xmark         & \xmark            & \cmark       &               & \xmark                   \\ \hline
+Fee structure                   & paid promos    &                   &              &               & paid promos             \\ \hline
+Second layer for scalablity?    & \xmark         &                   & \cmark       & \xmark        & \xmark               \\ \hline
 
 \end{tabular}
 \end{table}

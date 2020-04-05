@@ -2,41 +2,42 @@
 
 \section{Aventus}
 
+%This is probably not going to end up in the report
+\begin{comment}
 \subsection{Problems}
 \paragraph{Oversight}
 
-The main problem here is defined as a lack of oversight over digital assets from the issuer of these assets/. Oversight isn this context is defined as the ability for an issuer see exactly what is happening to their asset at any given moment in order to derive increased value from their digital assets.
+The main problem here is defined as a lack of oversight over digital assets from the issuer of these assets/. Oversight is this context is defined as the ability for an issuer see exactly what is happening to their asset at any given moment in order to derive increased value from their digital assets.
 
 \paragraph{Control}
 
 Control allows an issuer to protect the value of their digital assets. In order to achieve total control, the issuer needs control over how their assets are created, managed, and sold.
 
 A lack of control can lead to problems such as distribution of fake copies, price inflation in reselling markets, distribution by unauthorised vendors.
-
-\subsection{The Aventus token}
-
-The Aventus token (AVT) is used for transaction payments on the Aventus Protocol, as well as for registration within the protocol to become an Aventus Node. It is also used in the voting process for changes to the protocol and to determine which node processes the next Merkle root and receives the transaction fee reward.
+\end{comment}
 
 \subsection{The Aventus Protocol}
 
-The Aventus protocol is built on top of an existing public Blockchain network (Ethereum) and handles transactions off-chain.
--> The reason it does this is to overcome the problem of scalability on Ethereum, while still benefiting from its security and independence.
+The Aventus protocol is built on top of an existing public Blockchain network (Ethereum) and handles transactions off-chain. The reason it does this is to overcome the problem of scalability on Ethereum, while still benefiting from its security and independence.
+Transactions within the Aventus protocol are pooled into a Merkle tree and later on the Merkle root is posted onto Ethereum for security and validation, as described later on in \ref{subsection:aventus nodes}.
+This way transactions can be processed and verified more efficiently by Aventus nodes and then batched together into Aventus Blocks and sent to the Ethereum Blockchain, were they are made public.
 
-Transactions are processed and verified more efficiently by Aventus nodes and then batched together into Aventus Blocks and sent to the Ethereum Blockchain, were they are made public.
+\paragraph{The Aventus Token}
 
-\paragraph{Aventus Nodes}
+The Aventus token (AVT) is used for transaction payments on the Aventus Protocol, as well as for registration within the protocol to become an Aventus Node, although currently all Nodes in the Aventus overlay protocol are owned by the Aventus corporation. It is also used in the voting process for changes to the protocol and to determine which node processes the next Merkle root and receives the transaction fee reward.
 
-Aventus Nodes are the first entity to receive transaction information from asset transfer platforms, e.g. ticket selling websites. These transactions are boradcasted on to the other Aventus Nodes in the network, creating a pool of unprocessed transactions. All of the unprocessed transactions are then combined into a Merkle tree. The creation of these trees are rewarded with AVT. This brings the benefit that only the hash of the Merkle root has to be verified, instead of each transaction individually. The Merkle root is then posted onto the Ethereum Blockchain, where they are made public and invalid transactions can be detected.
+\paragraph{Aventus Nodes}\label{subsection:aventus nodes}
+
+ An entity can can become an Aventus node through spending a deposit of AVT, however currently these nodes are all owned by the Aventus corporation. Thus the protocol is not inherently fully decentralized until the option to become a node is made public. However the distribution of transaction processing onto multiple nodes before posting them onto Ethereum brings benefits in scalability and security.
+ Aventus Nodes are the first entity to receive transaction information from asset transfer platforms, e.g. ticket selling websites. These transactions are broadcasted on to the other Aventus Nodes in the network, creating a pool of unprocessed transactions. All of the unprocessed transactions are then combined into a Merkle tree. The creation of these trees are rewarded with AVT and the root of the tree is then published onto the Ethereum blockchain. This brings the benefit that only the hash of the Merkle root has to be verified, instead of each transaction individually. When published, the Merkle tree can be challenged by other nodes through the has of the root.
 
 \paragraph{Proof of Authority}
 
-The Aventus Protocol uses a proof-of-authority consensus mechanism to maintain the ledger. The nodes to be used to update the ledger are chosen based on their proven identity. For the Aventus Protocol, these are owned by the Aventus Protocol Foundation and its partners, which means that the consenus mechanism is not truly decentralized. 
+The Aventus Protocol uses a proof-of-authority consensus mechanism to maintain the ledger. The nodes to be used to update the ledger are chosen based on their proven identity. For the Aventus Protocol, these are owned by the Aventus Protocol Foundation and its partners, which means that the consensus mechanism is not truly decentralized. 
 
 \paragraph{Asset Creation}
 
 An \textit{asset issuer} can create a set of rules around what defines the asset and how it can be used, summarized in an \textit{asset class}. These rules may contain information on who the issuing parties are (using their public keys), who can resell, price limitations on reselling, etc. Once the asset class has been defined, the issuer can create individual assets (e.g. tickets) and begin distributing them based on the defined rules of the asset class. The issuer can set privacy terms concerning the assets transfer and ownership using zero-knowledge proofs. This lets a buyer prove ownership of the asset without having to disclose personal identity.
-
-%how do these proofs work?
 
 \paragraph{Reselling}
 
@@ -45,12 +46,4 @@ When the current owner initiates a transfer, the transaction is signed with thei
 \paragraph{Asset Redemption}
 
 The Aventus Protocol considers redemption as a \textit{special transfer case}. When an asset class is generated by the issuer, they can specify whether the asset is redeemable, e.g. for tickets, in which case a specific \textit{redemption address} is created on the Blockchain. Once the asset has been transferred to this address, it is irretrievable.
-
-The Aventus Protocol uses zero-knowledge proofs to adress the problem of privacy on the Ethereum Blockchain and prove ownership without leaking extra information. (Sigma Protocol)
--> These proofs allow users to add confidential information to transactions without revealing this information to the public, and while still allowing for the transaction to be publicly validated
-
-
-\paragraph{Aventus Nodes}
-
-
 
