@@ -1,0 +1,57 @@
+\section{Interactions}
+This section covers the interactions between the different actors and the applications. Figure \ref{fig:architecture} gives a high-level overview over the architectural landscape of the design. Each Subsection will introduce an interaction in more detail.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{design/diagrams/architectual-landscape.png}
+    \caption{Architectural Landscape}
+    \label{fig:architecture}
+\end{figure}
+
+\subsection{Buy a Ticket}
+Figure \ref{fig:buyticket-sequence-diagram} shows the process, when a guest buys a ticket. The smart contract locks the price in ETH until the event has passed. Since a smart contract cannot initiate a transaction itself, the host has to request the now unlocked ETH from smart contract to initiate the payment.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{design/diagrams/BuyTicket.png}
+    \caption{Ticket Sale Sequence Diagram}
+    \label{fig:buyticket-sequence-diagram}
+\end{figure}
+
+\subsection{Presale}
+The following sequence diagram illustrates how a guest can participate in a ticket presale.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{design/diagrams/presale.png}
+    \caption{Presale Sequence Diagram}
+    \label{fig:presale-seuquence-diagram}
+\end{figure}
+
+\subsection{Buy a Ticket from a Affiliate Link}
+The following sequence diagram shows the process, when a hosts hires affiliates to promote an event.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{design/diagrams/BuyTicketFromAffiliateLink.png}
+    \caption{Ticket Sale from Affiliate Link Sequence Diagram}
+    \label{fig:buyticket-from-affiliate-diagram}
+\end{figure}
+
+\subsection{Identity Registration}
+The following sequence diagram illustrates how a guest can proof his ownership of his verified Airbnb profile.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{design/diagrams/identy-registration-airbnb.png}
+    \caption{Identity Registration Airbnb}
+    \label{fig:identity-registration-airbnb}
+\end{figure}
+
+\subsection{Resell Ticket}
+The following sequence diagram illustrates how a guest can resell a owned ticket.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{design/diagrams/Resell Ticket.png}
+    \caption{Resell ticket}
+    \label{fig:Resell-ticket}
+\end{figure}

@@ -8,14 +8,14 @@ Whenever a user is registering at Guts, he needs to verify his phone number and 
 
 
 \paragraph{Storage}
-Guts stores all their data on their own servers. The tickets themselves are stored on the Ethereum block chain. All change of ownership are protocolled on the block chain. During the validation of the ticket when entering the venue, the validation of the tickets is done of chain, because the entrance control needs to be very fast and Guts does not yet believe, that the Ethereum block chain is able to handle such a high load of transactions.
+Guts stores all their data on their own servers. The tickets themselves are stored on the Ethereum blockchain. All change of ownership are protocolled on the blockchain. During the validation of the ticket when entering the venue, the validation of the tickets is done of chain, because the entrance control needs to be very fast and Guts does not yet believe, that the Ethereum blockchain is able to handle such a high load of transactions.
 
 \paragraph{Ticket Validation}
-Guts is using a special QR-Code, that is not static but rather defined by a function dependent on owner an time. This results in a constantly changing QR-Code, that does not allow the code to just be taken a screen shot of it and forwarded to another person. This makes sure, the ticket can only be exchanged over the smart contract. When entering the venue, the current QR-Code in the app is scanned and validated on the server of Guts, since the block chain would not be able to handle a lot of validation transactions.
+Guts is using a special QR-Code, that is not static but rather defined by a function dependent on owner an time. This results in a constantly changing QR-Code, that does not allow the code to just be taken a screen shot of it and forwarded to another person. This makes sure, the ticket can only be exchanged over the smart contract. When entering the venue, the current QR-Code in the app is scanned and validated on the server of Guts, since the blockchain would not be able to handle a lot of validation transactions.
 
 
 \paragraph{Ticket Transfer}
-Whenever a user wants to sell his ticket, it is resold over the smart contract over the block chain. The smart contract locks the price of the ticket. Therefore, the ticket can not be sold for a higher price, thus not allowing anybody to profit from buying more ticket than needed, since they can not be resold with margin.
+Whenever a user wants to sell his ticket, it is resold over the smart contract over the blockchain. The smart contract locks the price of the ticket. Therefore, the ticket can not be sold for a higher price, thus not allowing anybody to profit from buying more ticket than needed, since they can not be resold with margin.
 
 
 \paragraph{UX}

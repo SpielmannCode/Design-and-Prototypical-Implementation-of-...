@@ -1,3 +1,4 @@
 \subsection{Fraudulent Events}\label{subsection:fraudulent-events}
-claudio
-TODO: no central party should be able to have a say which events are allowed to publish an event allowing bad actors to imitate other companies and host fake events.
+A ticketing platform needs control mechanisms in order to prevent the creation of fraudulent events. This can be achieved by binding a creation deposit to the smart contract, ensuring that entities can not profit from creating false events. The amount needed for deposit would be challenging to define, as it should be high enough to punish the creation of a fraudulent event but not limiting to event creators with limited assets. In order to verify the legitimacy of an event, measurements such as the number of redeemed tickets could be used. Another option would be to incorporate a smart contract that lets the customers file a complaint, stating that the event has not been hosted at all or has been hosted but has not fulfilled its premises. 
+
+A different approach to this problem would be to verify legitimate event creators, giving the permission to host events and distribute tickets only to verified entities. This approach could be prone to human bias if done manually or bring new challenges on identity verification if done through an automated service, as proposed later on for user identity verification in this work.
