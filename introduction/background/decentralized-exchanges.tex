@@ -1,0 +1,23 @@
+\subsection{Decantralized Exchanges (DEX)}
+
+As part of the research, different approaches for exchanging digital tokens in a decentralized manner were studied.
+
+\subsubsection{Open Order Book: Etherdelta}
+Etherdelta is one of the first DEX that existed in the Ethereum ecosystem. Orders are created stored in a smart contract creating an open order book. The fills are also executed on-chain and thus, a trade results in at least two transactions. However, if someone wants to buy large amount of tokens, it requires multiple transactions to fill each order individually. Also, cancelling an order requires the user to make an on-chain transactions. The benefit of this design is that it is easy to implement and all orders are transparently accessible to everbody in the network. However, it is not efficient, very slow and susceptible to front-running attacks. 
+
+\subsubsection{Off-chain Order Book with On-chain Settlement: 0x Protocol}
+
+The 0x Protocol improves scalability of fully on-chain DEXs by storing the order book off-chain. An order can be made by signing a order bundle containing the number of tokens, price, expiration date and the fee structure. This bundle is then published and broadcast to other users. Anyone that knows about this signed order bundle can fill the order on-chain. The signed order bundles are stored on the relayers which nodes in the 0x network that help traders create, find and fill orders. These relayers earn fees on trades that is made with their help. The 0x protocol supports all three ERC standards described in the Section \ref{subsubsection:token-interfaces}. Furthermore it allows the creation of a coordinator, which can act as a transparent central entity operating on-chain. Every trade must obey to the rules given by the coordinator. Such a design could make sense for a regulated exchange where only verified traders are allowed to fill orders. In the context of ticketing, a coordinator could be useful to make sure that tickets are not sold for higher prices than the original price. 
+
+The advantage of this architecture is that trades can be filled faster and cheaper because there is no on-chain transaction for creating an order.
+
+
+\subsubsection{Liquidity Pools: Uniswap}
+
+In Uniswap, liquidity providers lock the some amount of ERC20 token with the equivalent value of ETH in a smart contract. The liquidity pool defines the exchange rate k of with the given formula 
+
+\[ x * y = k \]
+
+where x and y represent the quantity of ETH and ERC20 tokens. When the demand for the ERC20 increases, lesser tokens will be available in the liquidity pool and consequently, the exchange rate increases. 
+
+The drawbacks are that the liquidity pool must be large enough such that the slippage does not turn-off large volume traders. The advantage of this liquidity pool design is its simplicity. Furthermore, since there is no order book, large trades do not need to fill multiple orders individually. However, in the context of ticketing, it does not makes sense to use such a form of DEX since the price of a ticket cannot be set to an upper limit. 

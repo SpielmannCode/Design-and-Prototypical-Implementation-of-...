@@ -4,13 +4,11 @@ The following section provides insights into a use-case scenario of the platform
 \paragraph{The Event Host} registers on the platform via the dedicated website. After being approved, he creates an event and supplies all the information related to the event. This information may include necessary data such as the number of available entry tickets, ticket (pricing) categories, event date, event location, information for customers. The host can also define which form of identity control is needed from customers in order to attend the event. After finishing the event creation process, the event will be published onto the blockchain.
 It is a common business practice to provide people with a large following or influence with special promotion codes or \textit{affiliate links}, which they can promote through their channels and receive a bonus for each ticket bought through their link. The event host can assign affiliates to their events, providing them with their respective affiliate link. If the ticket buying smart contract is invoked through an affiliate link, a fraction of the transaction will be automatically transferred to the affiliate.  
 
-\paragraph{The Guest} has to register on the on the platform via the guest web application. Within the registration process, an Ethereum wallet will be created and linked to the newly created account. The guest now has two different options to add funds in order to buy his tickets. He either buys Ethereum an transfers them to his wallet and then directly buys his ticket or uses a the included fiat currency payment system, where he can buy his ticket using only his credit card.
+\paragraph{The Guest} %TODO: wallet creation, before buying the first ticket -> provide identity
+The guest now has two different options to add funds in order to buy his tickets. He either buys Ethereum an transfers them to his wallet and then directly buys his ticket or uses a the included fiat currency payment system, where he can buy his ticket using only his credit card.
 The payment process should not be different for the guest than buying a normal ticket without block chain involvement.
 With enough balance assigned to the wallet, the customer can buy event tickets through the web application.
 In order to attend events which require a prove of identity, the user has to be validated through the \textbf{identity provided} defined by the event host.
-
-%\paragraph{Affiliates} 
-%TODO: i han ez recht usfuearlich ueber affiliats gschriba in dr event host section, was meinend iar, bruchts do no an extra paragraph drfuer?
 
 Whenever a guest decides to not go to an event he is holding a ticket for, he is free to sell his ticket. However, the ticket can only be sold and transferred via a smart contract, since it is linked to his identity. It should not be possible to sell the ticket for a higher price, therefore eliminating the secondary ticket market.
 
