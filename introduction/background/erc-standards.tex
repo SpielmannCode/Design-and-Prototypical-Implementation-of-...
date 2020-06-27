@@ -6,13 +6,9 @@ There exist multiple interfaces in the Ethereum ecosystem to represent common pr
 
 \paragraph{ERC20} is used to represent fungible objects as tokens on the Ethereum blockchain. Fungible means that two tokens of the same kind are indistinguishable between each other. Most prominent examples are currencies or shares of a company. Applied to the event ticketing use case, representing tickets that have the same property such as standing tickets can makes sense.
 
-\paragraph{ERC721} is used to represent non-fungible objects as tokens on the Ethereum blockchain. Non-fungible means that each token has unique properties and can be distinguished from another token. Currently, this standard is mostly used to represent one-of-a-kind collectibles such game items. For a ticketing system it can make sense to represent a ticket with a uniquely identified seat number with this standard. 
+\paragraph{ERC721} is utilized represent non-fungible objects as tokens. Non-fungible means that each token has unique properties and can be distinguished from another token of the same kind. Currently, this standard is mostly used to represent one-of-a-kind collectibles such game items. For a ticketing system it can make sense to represent a ticket with a uniquely identified seat number with this standard. 
 
 \paragraph{ERC1155} is a more advanced standard than ERC20 and ERC721. It allows to the creation of fungible and non-fungible tokens in the same contract. Furthermore, it also provides the functionality to make batch transfers, meaning token can be sent/minted to multiple addresses with only one transaction. As events usually provide fungible as well as non-fungible tickets, this standard is superior in terms of efficiency over the other two standards.
-
-However, all three standard require a function which allows the owner to transfer the token/ticket to any address of his choice. Thus, allowing people to sell the ticket on a different platform for higher prices and consequently, allowing a secondary market to emerge. The idea of this project is that there exists only one marketplace/exchange for each event operating transparently on the blockchain. Also, it is intended that tickets are not transferred in the same way as these ERC standards do.
-
-It is be possible to inactivate the transfer function or whitelist a specific exchange address such that tickets could only be sold through this exchange. However, this breaks the design principle of these standards. These standards were developed to create a common interface such that a token can be used on multiple exchanges and the usability is the same among different tokens. 
 
 \subsubsection{Identity Interfaces}
 
