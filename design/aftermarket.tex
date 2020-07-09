@@ -1,16 +1,26 @@
+% author: Simon Bachmann
+
 \section{Aftermarket}\label{section:aftermarket}
 As explained in Section \ref{subsection:dex} there exist already multiple types of decentralized exchanges. Each type of exchange has to make a trade-off between number of on-chain transactions (speed/network fees/user experience) and the degree of decentralization. The on-chain order book is decentralized but lacks in terms of speed and low gas fees. The off-chain order book and on-chain settlement results in less fees and higher throughput but requires third parties to broadcast the orders of all participants and not censor any user. Thus, it comes at the cost of decentralization. Liquidity pools suffer from slippage. Thus, executing multiple small orders results in a better exchange rate and therefore, it comes at the cost of user experience while being decentralized.
 
-The goal of this project is build a regulated aftermarket and to prevent the emergence of a black market with unregulated prices. It must not be possible to find a seller on another platform but still perform the ownership transfer through the regulated aftermarket. This can be achieved with the open order book as follows:
+One of the goals of this project is build a regulated but decentralized aftermarket and to prevent the emergence of a black market with unregulated prices. It must not be possible to find a seller on another platform but still perform the ownership transfer through the regulated aftermarket. With the architecture of existing decentralized exchanges such an attack is possible. In this project it is referred as the black market attack and explained in more detail in Section \ref{subsection:black-market-attack}. 
 
-\begin{enumerate}
-    \item Seller: creates a listing on a traditional secondary market place such as Ebay.
-    \item Buyer: creates an offer for a higher price than the original price.
-    \item Seller: specifies a specific time when the order will be placed on the secondary market.
-    \item Buyer: Because there is no automatic match making in an open order book, the buyer must no queue up in any way. Thus, placing the fill order right after the order was published by the seller and setting the gas fees high enough, it opens the possibility for a black market. 
-\end{enumerate}
+This problem can be avoided when enforcing a queuing system where a ticket can only be sold to the user at the head of the queue. In other words, a ticket is always sold to the person that created a buy order first. 
 
-This problem can be avoided when enforcing a queuing system where a ticket can only be sold to the user at the head of the queue. The aftermarket architecture consists of a \textit{buying queue} where users can queue up that are interested in buying a ticket and a \textit{selling queue} where people can queue up for selling their previously acquired tickets. Users are automatically matched if the opposite queue is not empty. The state of the system does not allow to have people in both queues at the same time. 
+The aftermarket architecture consists of a \textit{buying queue} where users can queue up that are interested in buying a ticket and a \textit{selling queue} where people can queue up for selling their previously acquired tickets. Users are automatically matched if the opposite queue is not empty. The state of the system does not allow to have people in both queues at the same time. 
+
+Figure \ref{fig:aftermarket-queue} illustrates how the queuing architecture works. The number below each person indicates how many ticket he is willing to buy/sell. A \textit{head pointer} is used in both queues to find the next buyer/seller in constant time. The \textit{tail pointer} is used to enqueue a new buyer/seller. However, it is possible that a person leaves the queue as indicated with the potential buyer at index 2. This user is no longer interested in buying a ticket. This user is skipped when the \textit{head pointer} is accessing his buy order. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{figures/aftermarket-queue.png}
+    \caption{Aftermarket with buying and selling queue}
+    \label{fig:aftermarket-queue}
+\end{figure}
+
+An important note to make is that an order might run into an \textit{out-of-gas exception}, if many consecutive buyers or sellers leave the queue. In such a scenario, the users has to iterate over all the users that left the queue before finding a buyer/seller. 
+
+This problem can be solved by adding function to the smart contract that reads how many people must be skipped before finding an actual buyer/seller. This must be a read-only function and does not cost any network fees. The result of read operation can be used to set an adequate network fee for the buy/sell order. 
 
 \section{Dynamic Pricing}
 To allow dynamic pricing below the original price, an architecture was designed to accomplish multiple buying and selling queues with fixed prices. There can be arbitrarily many queues be configured. However, it is a trad-off between granular pricing and the possibility of allowing a black market to emerge. When configuring too many queues, it is possible to facilitate a trade between a buyer and seller from the black market. This can be achieved by selecting a pair of buying and selling queue which both are empty similar to the scenario explained in an open order book in Section \ref{section:aftermarket}. When configuring too little queues, the end user is restricted in setting the desired reselling price. 
@@ -25,6 +35,8 @@ The following scenarios describe possible states of the aftermarket. Figure \ref
     \caption{Aftermarket with high demand}
     \label{fig:aftermarket-high-demand}
 \end{figure}
+
+Contrarily, the same state can occur in the selling queues meaning that the supply is higher than the demand. A buyer can instantly fill a sell order.
 
 It is also possible that the aftermarket levels at a lower price than the original ticket price. This is shown in Figure \ref{fig:aftermarket-mixed} where multiple people are willing to sell the ticket for 75\% of the original price. On the other side, multiple people are willing to buy a ticket for only 50\% of the original ticket price. In this state, any seller could immediately settle a trade at 50\% of the original price and any buyer could immediately fill an offer at 75\%. 
 
