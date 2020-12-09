@@ -1,0 +1,16 @@
+% Author: Michael Bucher
+\section{Access Terminal}\label{imp:terminal}
+The Access Terminal is a web-based application.
+The app is structured into two components, the Connection and the Terminal.
+
+\subsection{Connection}
+The Connection component handles the initial connection to the backend and registration of the terminal. It requires the base URL of the host-backend, a secret code for registration and the information from what area the guest will come and what area the guest will enter by passing the terminal. With all correct information, the terminal sends a post request to the backend and receives a UUID that the backend assigned to it. Now the connection is established and the terminal displays the Terminal component and guests may be received at the venue.
+
+\subsection{Terminal}
+After the connection is established, the terminal requests a new random string, that is then displayed as a QR code. This QR code also contains the base URL of the backend, so that the guest-client that scans this QR code knows where to send the verification request. While this QR code is displayed, the app pings the backend for its status. As soon as the guest has verified its signature to the backend, the terminal's status changes to granted or denied. In a latter case, the guest is denied entrance, the terminal displays red and a new code is fetched on click. Now the same process as explained starts again. In a granted case, the terminal requests the amount of tickets that the guest wants to use for entry and then shows a green window with the number of redeemed tickets. The guest is granted entry and on click, a new code is requested and the process starts again.
+
+
+
+a verification connected to this terminal
+When the terminal view is created, an interval is started that pings the back end with requests about its status. 
+

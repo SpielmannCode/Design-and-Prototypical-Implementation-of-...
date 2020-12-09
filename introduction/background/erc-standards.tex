@@ -1,14 +1,16 @@
-\subsection{ERC Standards}
+\subsection{Ethereum Request for Comments (ERC) Standards}
 
-There exist multiple interfaces in the Ethereum ecosystem to represent common properties and interactions. The following section explains each of these standards in more detail and why it is relevant for this project.
+There exist multiple interfaces in the Ethereum ecosystem to represent common properties and interactions. The following section explains some of the relevant standards in more detail. 
 
 \subsubsection{Token Interfaces}\label{subsubsection:token-interfaces}
 
+The most prominent ERC standards evolve around the tokenization of goods and services. Since most tokenized objects share similar properties, it is possible to abstract common functionalities as part of a standard interface. Having a standard among different tokens enables better integration between them. As an example, these standards allow swapping a token that represents a art piece for a token that represents a voucher at a coffee shop. 
+
 % author: Simon Bachmann
 
-\paragraph{ERC20} is used to represent fungible objects as tokens on the Ethereum blockchain. Fungible means that two tokens of the same kind are indistinguishable between each other. Most prominent examples are currencies or shares of a company. Applied to the event ticketing use case, representing tickets that have the same property such as standing tickets can makes sense.
+\paragraph{ERC20} is used to represent fungible objects as tokens on the Ethereum BC. Fungible means that two tokens of the same kind are indistinguishable between each other. Most prominent examples are currencies or shares of a company. Applied to the event ticketing use case, representing tickets that have the same property such as standing tickets are considered.
 
-\paragraph{ERC721} is utilized represent non-fungible objects as tokens. Non-fungible means that each token has unique properties and can be distinguished from another token of the same kind. Currently, this standard is mostly used to represent one-of-a-kind collectibles such game items. For a ticketing system it can make sense to represent a ticket with a uniquely identified seat number with this standard. 
+\paragraph{ERC721} is utilized to represent non-fungible objects as tokens. Non-fungible means that each token has unique properties and can be distinguished from another token of the same kind. Currently, this standard is mostly used to represent one-of-a-kind collectibles such game items. For a ticketing system it can make sense to represent a ticket with a uniquely identified seat number with this standard. 
 
 \paragraph{ERC1155} is a more advanced standard than ERC20 and ERC721. It allows to the creation of fungible and non-fungible tokens in the same contract. Furthermore, it also provides the functionality to make batch transfers, meaning token can be sent/minted to multiple addresses with only one transaction. As events usually provide fungible as well as non-fungible tickets, this standard is superior in terms of efficiency over the other two standards.
 

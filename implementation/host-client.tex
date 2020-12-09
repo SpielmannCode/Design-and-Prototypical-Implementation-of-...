@@ -1,0 +1,95 @@
+%Author: Michael
+\section{Host Client}
+\subsection{Storage}
+Todo: Reference to claudio's section with the idb.
+
+\subsection{Event Handling}
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/createEvent.js}
+    \caption{Creation of an event.}
+    \label{code:eventCreation}
+\end{figure}
+
+\subsection{ID Approver Registration}
+
+\subsection{IPFS Schemas}
+
+\begin{listing}
+\begin{minted}[frame=single,
+               framesep=3mm,
+               linenos=true,
+               xleftmargin=21pt,
+               tabsize=4]{js}
+{     
+    "version": "1.0",
+    "event" : {
+        "title": "string",
+        "location": "string",
+        "category": "string",
+        "description": "string",
+        "time": unix timestamp,
+        "website": "URL string",
+        "twitter": "URL string",
+        "image": "base64"
+    }
+}
+\end{minted}
+\caption{Event Metadata Schema} 
+\label{event-metadata-json-schema}
+\end{listing}
+
+\begin{listing}
+\begin{minted}[frame=single,
+               framesep=3mm,
+               linenos=true,
+               xleftmargin=21pt,
+               tabsize=4]{js}
+{     
+    "version": "1.0",
+    "ticket" : {
+        "title": "string",
+        "description": "string",
+        "color": "hex string",
+        "event": "Ethereum contract address",
+        "mapping": [
+            "row1/col1",
+            "row2/col2",
+            ...
+        ]
+    }
+}
+\end{minted}
+\caption{Ticket Metadata Schema} 
+\label{ticket-metadata-json-schema}
+\end{listing}
+
+\begin{listing}
+\begin{minted}[frame=single,
+               framesep=3mm,
+               linenos=true,
+               xleftmargin=21pt,
+               tabsize=4]{js}
+{     
+    "version": "1.0",
+    "approver" : {
+        "title": "string",
+        "methods": [
+            {
+                "level": 1,
+                "value": "string"
+            },
+            {
+                "level": 2,
+                "value": "string"
+            },
+            ...
+        ]
+        "website": "URL string",
+        "twitter": "URL string"
+    }
+}
+\end{minted}
+\caption{Approver Metadata Schema} 
+\label{approver-metadata-json-schema}
+\end{listing}

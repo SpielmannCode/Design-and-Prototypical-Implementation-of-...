@@ -1,0 +1,55 @@
+\section{Smart Contracts (idetix Repository)}
+The Truffle\footnote{\url{https://www.trufflesuite.com}} framework was used to build, test and deploy the smart contract. Truffle simplifies the process of deploying the contracts to a local Ethereum node or to any of the public testnets.
+
+\subsection{Compilation}
+Truffle can also compile the contracts and generate the ABIs which are needed when integrating the contracts in another application.
+
+\noindent To compile to contract and generate the ABI run the following command:
+\begin{lstlisting}[language=bash]
+  $ truffle compile
+\end{lstlisting}
+
+This will generate or overwrite the existing folder called \textit{abi} in the root directory. 
+
+\subsection{Testing}
+
+In order to run the tests, a local Ethereum network can be created with Ganache\footnote{\url{https://www.trufflesuite.com/ganache}}. It is recommended to use \textit{ganache-cli} instead of their GUI application.
+
+\noindent To start a local Ethereum blockchain with Ganache run the following command:
+\begin{lstlisting}[language=bash]
+  $ ganache-cli --h 0.0.0.0
+\end{lstlisting}
+
+\noindent To run the tests against the local Ethereum blockchain:
+\begin{lstlisting}[language=bash]
+  $ truffle test --network ganachecli
+\end{lstlisting}
+
+\subsection{Deployment}
+Deploying the contracts to a (local) testnet or mainnet can be also be done with Truffle. 
+
+\subsubsection{Local}
+
+\noindent To deploy the contracts to the local Ganache instance:
+\begin{lstlisting}[language=bash]
+  $  truffle migrate --reset --network ganachecli
+\end{lstlisting}
+
+\subsubsection{Public Testnet}
+
+Deploying to a public testnet requires a connection to an Ethereum node of the desired network must be established. For this one can use Infura\footnote{\url{https://infura.io}} API. Furthermore, one must have an account with Ether to cover the deployment costs. There are multiple faucets for each of the public testnets that send free test ETH. 
+
+Also, an additional npm package\footnote{\url{https://www.npmjs.com/package/@truffle/hdwallet-provider}} is used to deploy the contracts. It enables Truffle to deploy to a public testnet by providing a mnemonic and a url to the Ethereum node.
+
+First, a local file in the root directory called \textit{.env} and past the correct values from Infura and your mnemonic.
+
+\begin{lstlisting}
+MNEMONIC="<...>"
+ROPSTEN_URL="https://ropsten.infura.io/v3/<...>"
+RINKEBY_URL="https://rinkeby.infura.io/v3/<...>"
+\end{lstlisting}
+
+\noindent To deploy the contracts to a public testnet run the following code:
+\begin{lstlisting}[language=bash]
+  $  truffle migrate --reset --network <ropsten or rinkeby>
+\end{lstlisting}

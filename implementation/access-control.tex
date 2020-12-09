@@ -1,0 +1,68 @@
+\section{Access Control}
+The Access Control application is a Java based Spring Boot application. The app is structured into four main components, the controller classes, the entity classes the repository interfaces and the service classes. Dependency injection is used to build up the application with the right instances of classes. The application is structured the same way as the identity approver application further described in section\ref{imp:dientiy} The complete implementation can be found on \href{https://github.com/bc-ticketing/host-backend}{github}. To not repeat the concepts already described in section \ref{imp:dientiy}, only unique aspects of the access control implementation are described. 
+
+\subsection{Functionality}
+The Access Control application is the back end used by the access terminal described in \ref{imp:terminal}. It used to control the access of the guests to the venue in general but can also be used to check, whether a guest has access to a certain area in the venue. It is the central data storage of guest records during the event. It is also used to check on chain, whether a guest guest hold a ticket for the event.  
+
+\subsection{Entity}
+This section describes the data model used to implement the access control functionality. We use two entities to store either terminal data or guest data.
+
+
+\subsubsection{Terminal}
+To achieve the specified functionality, the implementation of the required entities is needed. As the terminal need to register themselves at the back end, they are saved as an entity. The Terminal is represented as described in the java class shown in figure \ref{code:entity:access}. Again, as described in section \ref{imp:dientiy}, project lombok is used. 
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java, linerange={13-33}]{code-snippets/TerminalEntity.java}
+    \caption{Terminal Entity written in Java}
+    \label{code:entity:access}
+\end{figure}
+
+Every terminal is assigned an new unique id whenever it registers at the back end. The string randId is generated for every interaction with the guest. This is the random sequence that should be signed by the guest. The variable ticketType can optionally be used to pass an array of ticket types, whenever a special type of ticket is required to access the area after the terminal. The areaAcessFrom and areaAccessTo variables are used to specify, from where a guest is coming and where a guest is after passing the terminal. In numberOfTickets, we save with how many tickets the guest wants to enter. The variable requestStatus is used to represent, what state the terminal is currently in. The terminal can either not have requested a random sequence yet, have a pending random sequence that has not been signed by a guest yet, have a request that has been evaluated to allow the guest to enter the venue or have the status of a denied request.
+The variable ethAddress is set, whenever a guest successfully verified his ownership of the required amount of tickets. This is then used to insert the required database entries in the guest database. Since verifying the ownership over the tickets is done by calling a function from the guest-client, the terminal can only react to state changes. Therefore, we decided to store the error message produced when trying to verify ownership of tickets. This message can then be queried by the terminal to display a meaningful error message. 
+
+The different request status and venue areas are defined using the java construct enum as described in figure \ref{code:enum:Venu} and figure \ref{code:enum:Req}.
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/VenueArea.java}
+    \caption{Venue Area encoded in an enum}
+    \label{code:enum:Venu}
+    \lstinputlisting[language=Java]{code-snippets/RequestStatus.java}
+    \caption{Request Status encoded in an enum}
+    \label{code:enum:Req}
+\end{figure}
+
+\subsubsection{Guest}
+To implement the data model of the guest, we need to use a composite key as primary key, since we need to be able to store the amount of guest that are in a specific area of the venue. This is done by creating a class that represents the composite primary key as described in figure \ref{code:GuestID}. Tho use a class as primary key in a spring boot application in combination with JPA, it is necessary to override the equals() and hashCode() standard methods of a java object, since these are used to check, whether two keys are describing the same record in the database. 
+
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java, linerange={11-38} ]{code-snippets/GuestID.java}
+    \caption{Guest ID written in Java}
+    \label{code:GuestID}
+\end{figure}
+
+
+This results in a very simple implementation of the guest entity consisting only of the composite key as allready describen and an integer to save the amount of guests that are in the are. This is implemented as described in figure \ref{code:GuestEntity}.
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java, linerange={9-23} ]{code-snippets/GuestEntity.java}
+    \caption{Guest Entity written in Java}
+    \label{code:GuestEntity}
+\end{figure}
+
+\subsection{Repository and Controller}
+
+The components repository and controller are implemented the same way as already described in section \ref{imp:dientiy}. The only addition done, is that the repository interface for the terminal entity is extended by a function, that allows to find an terminal entity not on the primary key terminalId but find an entity by the randId. This needs to be done, since we did not want to encode the terminalId when verifying ownership over a ticket. In JPA, this is automatically achieved by the right naming of a function as shown in figure \ref{code:repo:terminal}. The keyword "find" specifies to search for an entity in the database. The keyword "By" specifies to use a filter and "RandId" is the name of the field used to filter. Therefore we need to provide a randId as parameter for this function.  
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java, linerange={10-12} ]{code-snippets/TerminalEntityRepository.java}
+    \caption{Repository used to persist the TerminalEntity written in Java}
+    \label{code:repo:terminal}
+\end{figure}
+
+\subsection{Service}
+
+The service classes are used to implement the main functionality of the application. As already described in section \ref{imp:dientiy}, the Blockchain class is used to communicate with the Ethereum Blockchain. The security class implements the verification of signatures.
+The class TerminalEntityService provides all the functionality to the terminal an the guest. It checks, that a guest still has enough tickets to enter. 
+The GuestEntityService is used to change the guest database, whenever a guest changes the area he is currently in the venue. 
+

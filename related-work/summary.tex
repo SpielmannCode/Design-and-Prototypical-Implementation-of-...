@@ -1,14 +1,18 @@
 \section{Comparison}
 
+
+Table \ref{tab:overview-competitors} shows an overview across other blockchain-based ticketing platforms.
+
 \begin{landscape}
 
 \begin{table}[]
+\centering
 \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
 \hline
                                 & \textbf{Blocktix}& \textbf{GUTS}   & \textbf{Aventus}& \textbf{Blockparty} & \textbf{Origin Protocol}       \\ \hline
 Blockchain                      & Ethereum       & Ethereum          & Ethereum     & Ethereum      & Ethereum                \\ \hline
 Native token                    & TIX            & GET               & AVT          & BOXX          & OGN                     \\ \hline
-Form of linked identity         & \xmark         & \cmark            &              & \cmark        & social profiles         \\ \hline
+Form of linked identity         & \xmark         & \cmark            &              & \cmark        & social profiles         \\ \hline 
 Resell possible?                & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
 Mechanism for presale           & \cmark         & \xmark            & \xmark       & \xmark        & \xmark                   \\ \hline
 What currency is used internally?& ETH           & ETH, GET, Fiat    &  ETH, AVT    & Fiat, BOXX    & \begin{tabular}[c]{@{}c@{}}ETH,DAI,\\ USDT,OGN\end{tabular}\\ \hline
@@ -20,8 +24,8 @@ Event spam prevention           & \cmark         & \xmark            & \cmark   
 Can ticket be sold for less?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        & \cmark                   \\ \hline
 Can ticket be sold for more?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        & \cmark                   \\ \hline
 Multiple tickets on account?    & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
-Metadata storage *1             & IPFS           & own Server        &      ?       & IPFS          & IPFS                    \\ \hline
-Escrow account *2               & \xmark         &  ?                &      ?       & \xmark        & \cmark                   \\ \hline
+Metadata storage           & IPFS           & own Server        &      ?       & IPFS          & IPFS                    \\ \hline
+Escrow account               & \xmark         &  ?                &      ?       & \xmark        & \cmark                   \\ \hline
 Mobile app available            & \cmark         & \cmark            & \xmark       & \cmark        & \cmark                   \\ \hline
 Web app available               & \cmark         & \cmark            &  \xmark      & \cmark        & \cmark                   \\ \hline
 User controls private key       & \cmark         & \xmark            &  \cmark      & \xmark        & \cmark                   \\ \hline
@@ -31,13 +35,14 @@ Fraud prevention?               & \cmark         & \cmark            &  \cmark  
 Deposit for hosting an event?   & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
 Off-chain ticket validation     & \xmark         & \cmark            &  ?           & ?             & -                       \\ \hline
 Does it preserve privacy?       & \xmark         & \xmark            & \cmark       & \cmark        & \xmark                   \\ \hline
-Fee structure                   & paid promos    &                   &      ?       & ?             & paid promos             \\ \hline
-Second layer for scalablity?    & \xmark         &                   & \cmark       & \xmark        & \xmark               \\ \hline
+Fee structure                   & paid promos    &  ?                &      ?       & ?             & paid promos             \\ \hline
+Second layer for scalablity?    & \xmark         &  \xmark           & \cmark       & \xmark        & \xmark               \\ \hline
 
 \end{tabular}
+\caption{Overview of other blockchain-based ticketing applications}
+\label{tab:overview-competitors}
 \end{table}
+
 
 \end{landscape}
 
-*1 Where is the meta data for a ticket/event stored such as seat number? (Usually not stored on the blockchain as metadata is expensive.)
-*2 Mechanism for paying back customers if event did not take place? Escrow account?

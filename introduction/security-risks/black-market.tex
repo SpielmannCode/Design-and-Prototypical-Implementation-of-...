@@ -1,14 +1,15 @@
 % author: Simon Bachmann
 
 \subsection{Black Market Attack}\label{subsection:black-market-attack}
-This attack attempts to sell a ticket on a different marketplace platform (such as Ebay) for a higher price but still transfer the ownership of the ticket through the smart contract. I can be achieved in the context of open and off-chain order-book decentralized exchanges and if and only if the platform allows to set an arbitrary price (below the original price) on the aftermarket. The different kind of decentralized exchanges is explained in Section \ref{subsection:dex}.
+This attack attempts to sell a ticket on a different marketplace platform (such as Ebay) for a higher price but still transfer the ownership of the ticket through the SC. I can be achieved in the context of open and off-chain order-book decentralized exchanges and if and only if the platform allows to set an arbitrary price (below the original price) on the aftermarket. The different kind of decentralized exchanges is explained in Section \ref{subsection:dex}.
 
 This attack can be carried out as follows:
 
 \begin{enumerate}
-    \item Seller: creates a listing on a traditional secondary market (black market) place such as Ebay.
+    \item Seller: creates a listing on a traditional secondary market (black market) such as Ebay.
     \item Buyer: purchases the listing.
-    \item Seller: determines a specific time when the order will be placed on the secondary market (legitimate aftermarket). Also a specific price for the sell order on the aftermarket. The time and the price is the crucial information and is passed on to the buyer only. It is important to note that selected price can be of arbitrarily granularity. This allows the seller to make a distinct sell order on the decentralized exchange. 
-    \item Buyer: Because there is no automatic match making in an open or off-chain order-book, the buyer must no queue up in any way. Thus, placing the fill order at the right time and setting the gas fees high enough, the ticket will be transferred to the buyer. 
+    \item Seller: determines a specific time when the order will be placed on the secondary market (legitimate aftermarket). Furthermore, a specific price for the sell order on the aftermarket is determined. The time and the price is the crucial information and is passed on to the buyer. It is important to note that selected price can be of arbitrarily granularity. This allows the seller to make a distinct sell order on the decentralized exchange. 
+    \item Buyer: Because there is no automatic match making in an open or off-chain order-book, the buyer must not queue up in any way. Thus, placing the fill order at the right time and setting the gas fees high enough, the ticket will be transferred to the buyer. 
 \end{enumerate}
 
+This scenario illustrates how a ticket can be transferred to an arbitrary person after selling the ticket for an unregulated price on the black market. For the ticketing use case, this must be circumvented.  

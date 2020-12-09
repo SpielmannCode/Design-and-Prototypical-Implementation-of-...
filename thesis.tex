@@ -14,6 +14,8 @@
 \usepackage{fancybox}
 \usepackage{picinpar,varioref,floatflt}
 \usepackage{ae}
+\usepackage{graphicx}
+\usepackage{subfig}
 \usepackage{longtable}
 \usepackage{textcomp}
 \usepackage{float}
@@ -25,9 +27,22 @@
 \usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage{array}
+\usepackage{comment}
 
 % custom packages
 \usepackage{pifont} % checkmark and xmark symbols
+\usepackage{minted}
+
+
+% add support for Solidity syntax highlighting
+\input{./lib/solidity-highlighting.tex}
+\lstset{
+numbers=left, 
+numberstyle=\small, 
+numbersep=8pt, 
+frame = single, 
+language=java, 
+framexleftmargin=15pt}
 
 % commands
 \newcommand{\cmark}{\ding{51}}%
@@ -48,13 +63,13 @@
 
 % Define the author printed on the cover page
 \author{Bachmann Simon
-        \\ Brasser Claudio
         \\ Bucher Michael
+        \\ Brasser Claudio
         \\ Spielmann Nicolas}
 % Define the city and country of the author
 \authorcity{Z\"urich, Switzerland}
 % Define the student IDs (Matrikelnummer)
-\studentid{\\14-709-893 \\ 14-921-746 \\ 13-929-369 \\ 15-704-505}
+\studentid{\\14-709-893 \\ 13-929-369 \\ 14-921-746 \\ 15-704-505}
 % Define the title with optional subtitle
 \title{Design and Prototypical Implementation of Blockchain Ticketing}
 % Define the supervisors
@@ -88,6 +103,7 @@
 \input{implementation/index}
 \input{evaluation/index}
 \input{summary/index}
+\input{future-work/index}
 
 %/ \input{bibliography.tex}
 

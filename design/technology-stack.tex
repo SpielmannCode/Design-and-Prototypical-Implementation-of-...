@@ -1,2 +1,51 @@
-\section{Technology Stack}
+\section{Technology Stack}\label{chapter:technology}
+
+This section covers the technologies used within all separate parts of the ticketing platform.
+
+\subsection{Client Web Applications}
+
+The Guest-Client web application is the graphical user interface provided for potential event guests interested in buying or selling tickets. The Host-Client web application is a tool for event organizers, which allows them to create events on the platform as well as to manage their events including the tickets.
+
+Both web applications are built with Vue.js, a client-side JavaScript framework. Vue.js allows to integrate reactivity and application state management into websites and convinces through its fast learning curve and natively available modules for most essential parts of a modern web application.
+
+\subsubsection{Guest Client}
+
+The goal of this application is to provide a user-friendly graphical user interface for smartphones. Clients should be able to browse available events and their ticket categories. Users should also be able to connect their Ethereum wallet to the application to enable in-app ticket purchases and message signing. Vue.js provides an option to bundle a web application into a Progesive Web Application (PWA). PWAs can be installed as an application on most modern smartphones to be displayed in the application launcher. The aim is to emulate the experience of a native application as close as possible, while keeping the development perks of a web application such as rapid prototyping, expressive UI modelling, and high availability of third-party libraries.
+
+In order to interact with the blockchain, the web3.js library is used. Web3.js provides wrapper functionality for data fetching from the blockchain and invoking remote smart contract calls. 
+As mentioned in \ref{section:data-model}, the storage capabilities of smart contracts is highly limited. Thus, all event-related information (metadata) which is not critical for the core logic of the platform is stored externally. To keep the architecture as decentralized as possible, the metadata is stored on Inter Planetary File System (IPFS). IPFS is a peer-to-peer distributed file system, which is accessed from the guest-client application through a JavaScript API. To reduce the amount of remote calls to the blockchain and IPFS during application usage, the data is maintained within Vuex, a state management library provided for Vue.js. However, this storage is still in-memory and thus cleared with each application restart. Relying on solely runtime storage would require a full-fetch of all data on the blockchain with each application start, which introduces long loading times. In order to circumvent this, the guest-client uses a second, persistent storage paradigm: The indexed Database (IDB). IDB is a schemaless datastore supported in most modern browsers which allows to store JSON-formatted data on the client device. The only caveat being that this storage is cleared when the user chooses to remove all browser data.
+
+\subsubsection{Host Client}
+
+\subsection{Back end Applications}
+
+The \textbf{Identity Approver Application} is the application used to automatically verify the identity of a guest. The \textbf{Access Control Application} is used at the venue of the event to check whether a guest owns a ticket for the event. 
+ 
+Both back end applications are Spring Boot Application\footnote{\url{https://spring.io/projects/spring-boot}} connected to a SQL-database to persist data. Spring Boot is used, since it allows to easily provide a REST API\footnote{\url{https://en.wikipedia.org/wiki/Representational_state_transfer}} and also has a lot of support for 3rd party dependencies such as Twilio\footnote{\url{https://www.twilio.com/}} or amazon web service(AWS)\footnote{\url{https://aws.amazon.com/}}.
+
+\subsubsection{Identity Approver Application}
+
+The core idea of the Identity Approver is to verify claims of ownership of guests over an identity. Everybody can register as an approver and provide their own implementation of verifying guests. For the scope of the project however, the idea was to provide an easy to run example implementation of this Identity Approver application.The sample implementation knows three different levels of identity.
+
+\begin{itemize}
+    \item The first level is verification by an email address. To verify the ownership, the application uses the in Spring included mail implementation. The mail address and its credentials are set in the application properties. For testing purpose, a dedicated gmail address has been created and used to send the random sequence via mail.
+    
+    \item The second level of identity is verification of a phone number. To send text messages to a phone number, Twilio is used. Twilio provides an easy to use API for Spring Boot, that can be used to send text messages. 
+    
+    \item The third level of identity verification is a KYC-like process. It requires the user upload a picture of the machine readable part of his passport, a picture of the whole passport and a selfie. The OCR(Optical character recognition)-Software Tesseract\footnote{\url{https://en.wikipedia.org/wiki/Tesseract_(software)}} is used to extract the text from the machine readable part of the document and the correctness is checked . Afterwards the similarity of the picture on the passport and the selfie is calculated using AWS. 
+\end{itemize}
+
+To interact with the ethereum blockchain, the java library web3j\footnote{\url{https://docs.web3j.io/}} is used. 
+The application can connect to a local ethereum node or use third party services such as infura\footnote{\url{https://infura.io/}} to connect to the blockchain.
+The application is build into a docker image and hosted on docker-hub\footnote{\url{https://hub.docker.com/}}. This allows anybody to just provide the required parameters for the used third party services in order to run the example implementation.  
+Docker-compose\footnote{\url{https://docs.docker.com/compose/}} is used to run the Spring Boot application in combination with a dockerized mySql docker image. This ensures easy deployment for anybody.
+
+
+\subsection{Blockchain and Smart Contracts}
+Ethereum is used as the blockchain application platform. Smart contracts are scripts that run on each node in the Ethereum Virtual Machine (EVM) and enable the developer to store complex data structures and business logic in a distributed manner. 
+
+The reason for choosing Ethereum was due to the broad range of developer tools auch as Truffle\footnote{\url{https://www.trufflesuite.com/}} and Ganache \footnote{\url{https://www.trufflesuite.com/ganache}}. These tools allow the developer to run a local Ethereum blockchain with immediate block mining and deploy, test and evaluate the written smart contract. 
+
+
+
 
