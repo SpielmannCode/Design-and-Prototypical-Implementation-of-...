@@ -1,95 +1,30 @@
 %Author: Michael
 \section{Host Client}
-\subsection{Storage}
-Todo: Reference to claudio's section with the idb.
+The host client is a web application that provides a graphical interface to easily interact with the event factory, event and identity SCs. It utilizes the same storage mechanism as the guest client as elaborated in section \ref{subsection:frontend-storage-mechanism} up to some minor adaptions. In the following the process of creating an event is elaborated on, which explicates the general structure of all SC invocations implemented in the host client.
 
-\subsection{Event Handling}
+\subsection{Event Creation}
+An event can be created in the event form as described in section \ref{design:event-creation}. Upon clicking the button to create the event, two methods are executed. First, the method \textit{uploadToIpfs} in figure \ref{code:upload-metadata} collects the data of the form to create a JSON according to the defined schema in \ref{code:event-metadata-schema}. This method is used for the creation of an event as well as the modification of the metadata of an existing event. All metadata entries are stored as strings except the time is saved as a number (a Unix time stamp). Further, for the sake of convenience the image is encoded into Base64\footnote{\url{https://base64.guru/}} rather than uploading the image itself and linking it in the schema. To avoid uploading and checking the image when changing the metadata of an event, the host does not need to upload the image again. Only if an image is uploaded then the image is actually changed in the metadata. The \textit{if} statement on line 9 in figure \ref{code:event-metadata-schema} demonstrates this. The condition is only triggered when no image was uploaded and the condition on line 10 makes sure, that a potential present image of the former metadata persists.
+
+As soon as the event metadata JSON is created, the pinata\footnote{\url{https://pinata.cloud/}} pinning service is used to pin the data to IPFS. This way it the metadata is assured to be accessible in the IPFS network at all times. The hash is then stored locally, so that the deployment methods, which is executed directly afterwards, can use it as necessary parameter for the deployment invocation.
+
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/uploadMetadata.js}
+    \caption{Metadata Upload to IPFS.}
+    \label{code:upload-metadata}
+\end{figure}
+
+As soon as the metadata is pinned to IPFS by pinata, the methdod \textit{deployEventContract} is executed (see figure \ref{code:create-event}). For transaction cost reasons (see section \ref{sec:tx-costs-evaluation}), the IPFS hash is restructured into three parts by utilizing the method \textit{cidToArgs} of the npm library idetix-utils\footnote{\url{https://www.npmjs.com/package/idetix-utils}}. Then the method \textit{createEvent} is invoked on the event factory contract to deploy the new event contract. When the invocation is sent, the end user has to sign the transaction to enter the callback function on line 16. If something went wrong or the transaction was rejected, the function on line 44 catches this case, displays an error message and unpins the metadata again from IPFS to avoid unnecessary pins. If the transaction was signed, then the callback function on line 16 is executed. A \textit{while} loop is started at line 25 to check whether the transaction was included in a block. The check is done every three seconds, which is the current value of the constant in the \textit{sleep} function. As soon as the transaction is included in a block, the \textit{while} loop is exited, the new event is loaded and stored and finally the end user is routed back to the event list.
 
 \begin{figure}[H]
     \lstinputlisting[language=Java]{code-snippets/createEvent.js}
-    \caption{Creation of an event.}
-    \label{code:eventCreation}
+    \caption{Event Creation.}
+    \label{code:create-event}
 \end{figure}
-
-\subsection{ID Approver Registration}
 
 \subsection{IPFS Schemas}
 
-\begin{listing}
-\begin{minted}[frame=single,
-               framesep=3mm,
-               linenos=true,
-               xleftmargin=21pt,
-               tabsize=4]{js}
-{     
-    "version": "1.0",
-    "event" : {
-        "title": "string",
-        "location": "string",
-        "category": "string",
-        "description": "string",
-        "time": unix timestamp,
-        "website": "URL string",
-        "twitter": "URL string",
-        "image": "base64"
-    }
-}
-\end{minted}
-\caption{Event Metadata Schema} 
-\label{event-metadata-json-schema}
-\end{listing}
-
-\begin{listing}
-\begin{minted}[frame=single,
-               framesep=3mm,
-               linenos=true,
-               xleftmargin=21pt,
-               tabsize=4]{js}
-{     
-    "version": "1.0",
-    "ticket" : {
-        "title": "string",
-        "description": "string",
-        "color": "hex string",
-        "event": "Ethereum contract address",
-        "mapping": [
-            "row1/col1",
-            "row2/col2",
-            ...
-        ]
-    }
-}
-\end{minted}
-\caption{Ticket Metadata Schema} 
-\label{ticket-metadata-json-schema}
-\end{listing}
-
-\begin{listing}
-\begin{minted}[frame=single,
-               framesep=3mm,
-               linenos=true,
-               xleftmargin=21pt,
-               tabsize=4]{js}
-{     
-    "version": "1.0",
-    "approver" : {
-        "title": "string",
-        "methods": [
-            {
-                "level": 1,
-                "value": "string"
-            },
-            {
-                "level": 2,
-                "value": "string"
-            },
-            ...
-        ]
-        "website": "URL string",
-        "twitter": "URL string"
-    }
-}
-\end{minted}
-\caption{Approver Metadata Schema} 
-\label{approver-metadata-json-schema}
-\end{listing}
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/EventSchema.json}
+    \caption{Event Metadata Schema.}
+    \label{code:event-metadata-schema}
+\end{figure}

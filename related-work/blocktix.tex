@@ -1,31 +1,31 @@
 %autor: Simon Bachmann
 
-\section{Blocktix}
+\section{Blocktix}\label{section:blocktix}
 
-Blocktix \cite{blocktix-whitepaper} is a startup based in the Netherlands. Their application allows anyone to host an event and issue tickets on the Ethereum blockchain. 
+Blocktix \cite{blocktix-whitepaper} is a startup based in the Netherlands. Their application allows anyone to host an event and issue tickets on the Ethereum BC. 
 
 \paragraph{TIX Token}
-Users are rewarded with TIX tokens for verifying if an event is legit. Furthermore, the token can be used to buy promotions on the platform to gain more attraction for a specific event. Also, an amount of TIX tokens are deposited to host an event to prevent spam on the platform. The token is also used to vote on the platform. Protocol updates can only be introduced if and only if the majority of voters agree on an updated smart contract. 
+Users are rewarded with TIX tokens for verifying if an event is legit. Furthermore, the token can be used to buy promotions on the platform to gain more attraction for a specific event. Also, an amount of TIX tokens are deposited to host an event to prevent spam on the platform. The token is also used to vote on the platform. Protocol updates can only be introduced if and only if the majority of voters agree on an updated SC. 
 Voting on fraudulent events by token holders removes the possibility of censorship by a central party. However, it requires that the token holders actively participate on the platform. 
 
 \paragraph{Ticket Types}
 The protocol is not limited to only manage the entry tickets. It also hosts consumable tokens as vouchers for drinks and food. 
-The Ethereum blockchain can currently process a maximum of 15 tickets per second (tps). Invalidating tickets and vouchers on-chain are technically not feasible for large events. A solution to invalidate tickets off-chain requires additional infrastructure but is a more scalable solution. 
+The Ethereum BC can currently process a maximum of 15 tickets per second (tps). Invalidating tickets and vouchers on-chain are technically not feasible for large events. A solution to invalidate tickets off-chain requires additional infrastructure but is a more scalable solution. 
 
 \paragraph{Ticket Auctions}
 The protocol allows the event host to offer tickets as part of an auction. People can make bids with the price they are willing to pay for a ticket and the highest bidders receive a ticket. 
-An auction for distributing tickets not only maximizes the profit of an event host, but it also prevents an important security risk on a blockchain which is called front-running and described in more detail in Section \ref{section:front-running}. When the ticket sale starts, a user is able to obtain a ticket by paying more gas for a transaction than others. 
+An auction for distributing tickets not only maximizes the profit of an event host, but it also prevents an important security risk on a BC which is called front-running and described in more detail in Section \ref{section:front-running}. When the ticket sale starts, a user is able to obtain a ticket by paying more gas for a transaction than others. 
 
 \paragraph{Ticket Validation}
-When a user enters the venue with a valid ticket, it is scanned by the event host. The host must scan the public key of the visitor and if this address is stored in the smart contract, access is granted. This is an on-chain validation process and no other infrastructure is needed for the access control.
+When a user enters the venue with a valid ticket, it is scanned by the event host. The host must scan the public key of the visitor and if this address is stored in the SC, access is granted. This is an on-chain validation process and no other infrastructure is needed for the access control.
 
 \paragraph{Identification}
 Tickets are not linked to any type of identification nor is the reselling price limited. Furthermore, it is possible to send a ticket to another Ethereum account allowing users to sell the ticket on other platforms. Thus, the Blocktix does not solve the problem with higher ticket prices on the secondary market. 
 
 \paragraph{Mobile and Web Clients}
-Creating and managing events can be done with the web application. The user has the possibility to connect with the browser extension Metamask. However, connecting to the application with Metamask seems no longer to be working. This might be due to the fact that Metamask recently introduced breaking changes to their API \cite{metamask-breaking-changes}. The other option to connect to the Ethereum blockchain is by importing an existing wallet or by creating a new wallet that is stored in local storage. 
+Creating and managing events can be done with the web application. The user has the possibility to connect with the browser extension Metamask. However, connecting to the application with Metamask seems no longer to be working. This might be due to the fact that Metamask recently introduced breaking changes to their API \cite{metamask-breaking-changes}. The other option to connect to the Ethereum BC is by importing an existing wallet or by creating a new wallet that is stored in local storage. 
 
-The mobile application is intended for event visitors. Similar to the web application, for communicating with the Ethereum blockchain, the user must import or create a new wallet within the application.
+The mobile application is intended for event visitors. Similar to the web application, for communicating with the Ethereum BC, the user must import or create a new wallet within the application.
 
 Due to the fact that Metamask is no longer working and the application only runs on the main Ethereum network, the features described in the whitepaper could not be tested.
 

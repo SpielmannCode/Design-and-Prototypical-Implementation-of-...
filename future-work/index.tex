@@ -2,18 +2,21 @@
 
 % Author: Simon Bachmann
 \section{Optimizing Solidity Contracts}
-Solidity offers two ways to consume the state of the smart contract. One can define variables as public and the compiler will create getter functions to retrieve that data. The second method is to consume the data from the event log which is much cheaper as explained in Section \ref{subsection:event-log-vs-public-getters}. Currently, events are emitted to the event log but public getters also exist for easier testability.
+Solidity offers two ways to consume the state of the SC. One can define variables as public and the compiler will create getter functions to retrieve that data. The second method is to consume the data from the event log which is much cheaper as explained in Section \ref{subsection:event-log-vs-public-getters}. Currently, events are emitted to the event log but public getters also exist for easier testability.
 
 However, storing the data in the event log requires more computational power at the consuming side. The event log must be aggregated and interpreted correctly. For example when a event host updates the meta information of an event, there will be multiple logs and only the latest is relevant. 
 
+% Author: Simon Bachmann
 \section{Analyzing Data Model Tools for UX Improvements}
-Currently, the guest and the host client maintain the state of the application by crawling the event log and keep relevant data in the application storage. This task is computationally expensive and may result in slow loading times for obtaining the most recent changes. This is described in Section \ref{section:data-model}. A trustless indexing system for retrieving data from the blockchain can improve the usablility for low powered computing devices. Analyzing different networks such as the Graph \cite{the-graph}, which is building a network of indexing nodes for querying data from Ethereum with GraphQL, can improve the performance of frontend applications and the overall user experience.
+Currently, the guest and the host client maintain the state of the application by crawling the event log and keep relevant data in the application storage. This task is computationally expensive and may result in slow loading times for obtaining the most recent changes. This is described in Section \ref{section:data-model}. A trust-less indexing system for retrieving data from the BC can improve the usability for low powered computing devices. Analyzing different networks such as the Graph \cite{the-graph}, which is building a network of indexing nodes for querying data from Ethereum with GraphQL, can improve the performance of frontend applications and the overall user experience.
 
+% Author: Simon Bachmann
 \section{Proxy Contracts}
 As shown in the network fee analysis in Section \ref{tab:gas-cost-analysis-sc}, deploying a new event is expensive. It is possible to reduce the fees for creating new instances of the same contract with the proxy pattern (EIP-1167) \cite{solidity-proxy-pattern}. The proxy pattern is used to clone functionality of an existing contract with minimum side effects in terms of memory usage. This results in cheaper gas costs during the deployment of new proxy instances. 
 
+% Author: Simon Bachmann
 \section{Persist Data with Payed Decentralized Storage Service}
-Filecoin
+Storing the metadata on an content-based medium such as IPFS has the advantage that it can be found if the location of the file has moved but is still available on another device in the network. However, a file on IPFS is forgotten if it is no longer pinned by any of the nodes in the network. One option for an event host is to store and serve these files on a dedicated device to make sure that the file continues to exist on IPFS. This requires additional knowledge on setting up an IPFS-enabled server. Preferably, a non technical host should not need to care about this but instead have the option to delegate this task to others. Filecoin\footnote{https://docs.filecoin.io} adds economical incentives on top of IPFS to ensure files are stored reliably.
 
 % Author: Michael Bucher
 \section{Seating Plan Export and Import}
@@ -30,11 +33,12 @@ In our current frontend implementation, we do not provide the functionality to c
 \section{Live Statistics at the Venue}
 Currently, the host has no direct overview of the state of the access-control. The host-backend could be extended with request mappings, that aggregate data of the current state of the access-control. A component could be embedded in the host-client, which can connect to the host-backend to visualize and track various data points, e.g. how many guests enter the location per time unit, how many guests already have entered or how many guests are still to come. Further, the time when it is expected that all guests have entered could be calculated and measures could be taken, like installing and controlling an extra terminal to process all guest until the event start time.
 
+% Author: Michael Bucher & Claudio Brasser
 \section{Frontend Data Handling Library}
-The host-client and guest-client use almost the same event and ticket handling JavaScript methods but separate in their corresponding repositories. These methods could be be summarized in a library.
+The host-client and guest-client use almost the same event and ticket handling JavaScript methods but separate in their corresponding repositories. These methods could be be summarized in a general purpose library. As of the time writing, the data loading and caching functionality is built specifically for the data model of Idetix events and tickets. However this could be easily modified to work with arbitrary data models and solidity events provided by the programmer in order to augment its capability as a general purpose library for BC event handling and data fetching. This would provide more code to further ease the process of building a custom frontend for the Idetix platform as well as other potential BC based web applications. 
 
 \section{Use Ticket-Type as Venue Area}
-The access control back end uses different areas currently implemented as enums in java to segment the venue into different areas. To further improve the experience for the host, it could be useful to automatically obtain the ticket types from the blockchain and initialize the access control backend with ticket types as additional venue areas. This could simplify the experience when registering the terminals.
+The access control backend uses different areas currently implemented as enums in Java to segment the venue into different areas. To further improve the experience for the host, it could be useful to automatically obtain the ticket types from the BC and initialize the access control backend with ticket types as additional venue areas. This could simplify the experience when registering the terminals.
 
 \section{Prevent fraudulent overuse of Identity Approver}
-As the Identity Approver send a message to the Identity provided by the guest, there is the potential of malicious persons to misuse the service and send a high amount of these messages to any identity (email or phone). This could be prevented by limiting the amount of times, a potential guest can request to approve a given identity. This could either be a general restriction or a restriction for a given time frame. For example a maximum of 3 messages per phone number per day.
+As the Identity Approver sends a message to the Identity provided by the guest, there is the potential of malicious persons to misuse the service and send a high amount of these messages to any identity (email or phone). This could be prevented by limiting the amount of times, a potential guest can request to approve a given identity. This could either be a general restriction or a restriction for a given time frame. For example a maximum of three messages per phone number per day.

@@ -1,16 +1,27 @@
 % Author: Michael Bucher
 \section{Access Terminal}\label{imp:terminal}
-The Access Terminal is a web-based application.
-The app is structured into two components, the Connection and the Terminal.
+The Access Terminal is a web application that supports the connection to the access control backend to handle ticket validation at the venue. Its implementation is structured into the two components Connection and Terminal.
 
 \subsection{Connection}
-The Connection component handles the initial connection to the backend and registration of the terminal. It requires the base URL of the host-backend, a secret code for registration and the information from what area the guest will come and what area the guest will enter by passing the terminal. With all correct information, the terminal sends a post request to the backend and receives a UUID that the backend assigned to it. Now the connection is established and the terminal displays the Terminal component and guests may be received at the venue.
+The Connection component handles the initial connection to the backend. It contains a simple form to define the necessary parameters for registration in the backend. When the registration api call was successful, the application stores the returned terminal id and routes to the Terminal view.
 
 \subsection{Terminal}
-After the connection is established, the terminal requests a new random string, that is then displayed as a QR code. This QR code also contains the base URL of the backend, so that the guest-client that scans this QR code knows where to send the verification request. While this QR code is displayed, the app pings the backend for its status. As soon as the guest has verified its signature to the backend, the terminal's status changes to granted or denied. In a latter case, the guest is denied entrance, the terminal displays red and a new code is fetched on click. Now the same process as explained starts again. In a granted case, the terminal requests the amount of tickets that the guest wants to use for entry and then shows a green window with the number of redeemed tickets. The guest is granted entry and on click, a new code is requested and the process starts again.
+The Terminal component first requests a new \textit{randId} in line 2 of figure \ref{code:terminal-start}. This message is then displayed in a QR code together with the terminal id to be scanned by the guest client application. Then an interval is started, which executes the method \textit{handleStatus} (figure \ref{code:terminal-status-handling}) continuously. This method requests the terminal's status in the backend and executes the according methods depending on the return. The method \textit{showQR} on line 5 simply displays the current values for the \textit{randId} and terminal id as a QR code. On the lines 7 and 9 are the states \textit{granted} and \textit{denied} handled. E.g. when the status changes to \textit{granted} occurs, the method \textit{handleGrantedStatus} as in figure \ref{code:terminal-handle-granted} is executed. It fetches the amount of tickets that were validated and displays this number. When the guest(s) have clicked on the terminal and entered the location, a new \textit{randId} is requested, the status in the backend changes back to \textit{pending} and the newly retrieved \textit{randId} is displayed in the QR code and the terminal is ready to receive the next updated status from the backend.
 
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/terminalCreated.js}
+    \caption{Terminal Creation}
+    \label{code:terminal-start}
+\end{figure}
 
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/handleStatus.js}
+    \caption{Terminal - General Status Handling}
+    \label{code:terminal-status-handling}
+\end{figure}
 
-a verification connected to this terminal
-When the terminal view is created, an interval is started that pings the back end with requests about its status. 
-
+\begin{figure}[H]
+    \lstinputlisting[language=Java]{code-snippets/terminalGrantedStatus.js}
+    \caption{Terminal - Granted Status Handling}
+    \label{code:terminal-handle-granted}
+\end{figure}

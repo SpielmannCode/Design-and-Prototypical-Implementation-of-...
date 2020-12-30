@@ -2,24 +2,24 @@
 The main concern of the design and implementation of the Identity Approver was the cost an identity approver has to verify a potential guest. This section describes the issues faced and evaluates the solutions implemented.
 
 \subsection{Cost Analysis}
-As the Identity Approver stores the proofs to the Blockchain, he has to pay for the transaction by himself. The Identity Approver also has to pay for the third party services used to verify a guest's identity. Therefore we calculated the price for one validation of each tier.
+As the Identity Approver stores the proofs to the BC, he has to pay for the transaction by himself. The Identity Approver also has to pay for the third party services used to verify a guest's identity. Therefore the price for one validation of each tier was calculated.
 
-As described in section \ref{sc:econom}, the Identity Approver gets compensated, whenever a guest, that has been verified by him, buys a ticket. All the affiliates together are compensated with 10\% of the ticket price. Therefore, the amount received by the Identity Approver decreases when the amount of affiliated increases. For this evaluation, we assume that there are only two affiliates beside the Idenity Approver, giving him 3.3\% of the ticket price as reward.
+As described in section \ref{sc:econom}, the Identity Approver gets compensated, whenever a guest, that has been verified by him, buys a ticket. All the affiliates together are compensated with 10\% of the ticket price. Therefore, the amount received by the Identity Approver decreases when the amount of affiliated increases. For this evaluation, it is assumed that there are only two affiliates beside the Idenity Approver, giving him 3.3\% of the ticket price as reward.
 
 \subsubsection{Email}
-The verification of the guests email address is the least complex interaction. Given, that a Identity Approver already has an existing email-server, we can argument, that the cost for an additional email-address is negligible. Therefor we only have to factor in the GAS cost of the Blockchain transaction. The function to approve a guest consumes a total amount of \textbf{28'845 Gas}. 
+The verification of the guests email address is the least complex interaction. Given, that a Identity Approver already has an existing email-server, it is assumed that the cost for an additional email-address is negligible. Therefor only the GAS cost of the BC transaction is factored into the calculation. The function to approve a guest consumes a total amount of \textbf{28'845 Gas}. 
 
 Based on the ETH price of the evaluation (see section \ref{sec:smart_cont:eval}), this result in a cost of \textbf{0.00098 ETH} which is equivalent to approximately \textbf{0.37 \$}. This means, that the Identity Approver allready paid for his expenses, once the guest bought one ticket that cost more than 12\$. 
 
 \subsubsection{Phone}
-The Ethereum transaction cost is not changing for the other type of identity approved. Therefore this cost will stay at \textbf{0.37\$}. However, on top of this, we also have to consider the cost of sending out the text messages. Twilio charges \textbf{0.069\$} per SMS sent and \textbf{8\$} per phone number per month\cite{twillio-Cost}. With a very pessimistic calculation of only 10 verification's per month, this results in a total cost of \textbf{0.869\$} per text message.
+The Ethereum transaction cost is not changing for the other type of identity approved. Therefore this cost will stay at \textbf{0.37\$}. However, on top of this, the cost of sending out the text messages also has to be considered. Twilio charges \textbf{0.069\$} per SMS sent and \textbf{8\$} per phone number per month\cite{twillio-Cost}. With a very pessimistic calculation of only 10 verification's per month, this results in a total cost of \textbf{0.869\$} per text message.
 
-This results in a total cost of \textbf{1.239\$}. This means, that the Identity Approver allready paid for his expenses, once the guest bought one ticket that cost more than 41\$. 
+This results in a total cost of \textbf{1.239\$}. This means, that the Identity Approver already paid for his expenses, once the guest bought one ticket that cost more than 41\$. 
 
 \subsubsection{KYC}
-As allready stated, the cost of the Ethereum transaction does not change. The difference compared to the other tiers is, that AWS rekognition is used to calculate similarities of faces in pictures. The cost of this service reduce with the amount of pictures analyzed. To have a pessimistic evaluation, we use the price of the lowest tier and a european AWS server. This results in a cost of \textbf{0.0012\$} per image\cite{AWS-Cost}.
+As already stated, the cost of the Ethereum transaction does not change. The difference compared to the other tiers is, that AWS rekognition is used to calculate similarities of faces in pictures. The cost of this service reduce with the amount of pictures analyzed. To have a pessimistic evaluation, the price of the lowest tier and a european AWS server was used to calculate the cost. This results in a cost of \textbf{0.0012\$} per image\cite{AWS-Cost}.
 
-This results in a total cost of \textbf{0.3712\$}. This means, that the Identity Approver allready paid for his expenses, once the guest bought one ticket that cost more than 12\$. 
+This results in a total cost of \textbf{0.3712\$}. This means, that the Identity Approver already paid for his expenses, once the guest bought one ticket that cost more than 12\$. 
 
 \subsubsection{Conclusion}
 The average ticket price in the year 2017 was \textbf{79.47CHF} which is around\textbf{ 88\$} \cite{Ticket-Price}. This means, that the Identity Approver has a very high chance to break even or make provit as soon as a guest buys ans ticket. Therefore the suggested model seems to be very profitable for Identity Approver, since they only need to verify the guest once, but will get a share of the ticket price anytime he is required as an approver. 

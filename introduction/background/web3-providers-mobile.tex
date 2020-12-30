@@ -1,25 +1,17 @@
-\section{Web3 Providers on Mobile}
+\section{Blockchain Interfaces for mobile devices}
 
-\subsection{Web3 Browser}
-Ex.: coinbase wallet, status, trust wallet, metamask mobile
+The BC has been facing issues with usability for non technical users, hindering its path to broader acceptance as a public payment platform. There exist several methods of providing a user friendly interface to BC wallets on web based platform both on conventional desktop computers, as well as mobile devices. The following section will first discuss MetaMask as a general purpose browser plugin for accessing a BC wallet as well as making payments with cryptocurrencies. Secondly, the WalletConnect library is introduced which offers functionality for easily connecting a wallet application to a website requesting access to a wallet.
+
+\subsection{MetaMask}
+MetaMask\footnote{\url{https://metamask.io/}} offers its functionality through a browser plugin on most modern web browsers. When the plugin is activated, the user can import his wallet(s) through either a mnemonic seed phrase or the respective private keys. Once imported, the user is prompted with a pop up window whenever a website wants to access the user's wallet, e.g. for signing a transaction. There exists also a MetaMask mobile application with an integrated web browser. This enables the user to easily access his wallet from their mobile phone, one drawback being that they must use the MetaMask integrated web browser instead of their default one in order to interact with a given website. 
 
 \subsection{Wallet Connect}
+One effort to further ease the process of making BC transactions from a mobile phone is WalletConnect\footnote{\url{https://walletconnect.org/}}. It is a library that can be integrated into websites as a Web3 provider. Once a website using WalletConnect wants to access the user's wallet, they are prompted with a set of mobile wallet applications. If they choose their application of choice, they are then forwarded to the application and can connect the wallet with a single tap and are automatically redirected to the website, which is now able to interact with the wallet.
+
+WalletConnect was the initial choice for this project as the Web3 provider and it has been fully integrated into the Idetix platform. However as the library is still in it's early development phase, an recent unsolved issue in the library's source code made it unusable. Since MetaMask has been selected as a fallback for such cases, the platform remained usable despite this fallback.
 https://twitter.com/WalletConnect/status/1272589360123260935
 normal browser + mobile wallet to sign transactions
 possible with PWA
 Ex. Rainbow
 
-\subsection{Cloud Wallet Provider}
-key is not stored on your device
-Ex. Fortmatic
 
-
-\subsection{Custom Wallet}
-private key is stored in local storage on device. user must import wallet into app. and this process has to be repeated accross multiple devices. 
-Ex. Origin Protocol react native app
-
-\subsection{Hardware Wallet}
-Ex. Ledger, trezor
-
-
-Bitski

@@ -1,0 +1,5 @@
+\section{Access Control}
+% author: Nicolas Spielmann
+The access control application is used to check, whether a guest is eligible to enter the event. This means, the guest needs to hold the right amount and the right of tickets. This need to be done very fast, since a guest does not want to wait for the validity check when entering the venue. Therefore a hybrid on and off chain approach was proposed, since there is no easy way to get all the ticket holders before an event .
+
+Once the guest approaches at the event the first time, he provides his Ethereum address. Once the Ethereum address is known, it is trivial to query the SC on the BC for ticket ownership. The guest is then stored in the local database. To prevent a ticket from beeing used multiple times, it is always checked, whether the Ethereum address provided still has enough non entered tickets. This implements the invalidation of tickets, as only guest with enough non used tickets can enter. An invalidation of tickets on chain would have come with a very high cost, since all the tickets would require an Etheresum transaction costing GAS for the invalidation.

@@ -1,11 +1,11 @@
 % author: Simon Bachmann
 
-\section{Smart Contracts}
+\section{Smart Contracts}\label{section:smart-contracts-design}
 
-This section covers all the architectural decisions that affect the smart contract design. 
+This section covers all the architectural decisions that affect the SC design. 
 
 \subsection{Aftermarket}\label{section:aftermarket}
-As explained in Section \ref{subsection:dex} there exist multiple types of decentralized exchanges. The design of each type of exchange underlies a trade-off between number of on-chain transactions (speed/network fees/user experience) and the degree of decentralization. The on-chain order book is decentralized but lacks in terms of speed and low gas fees. The off-chain order book and on-chain settlement results in less fees and higher throughput but requires third parties to broadcast the orders of all participants and not censor any user. Thus, it comes at the cost of decentralization. Liquidity pools suffer from slippage. Thus, executing multiple small orders results in a better exchange rate.
+As explained in Section \ref{subsection:dex} there exist multiple types of DEXs. The design of each type of exchange underlies a trade-off between number of on-chain transactions (speed/network fees/user experience) and the degree of decentralization. The on-chain order book is decentralized but lacks in terms of speed and low gas fees. The off-chain order book and on-chain settlement results in less fees and higher throughput but requires third parties to broadcast the orders of all participants and not censor any user. Thus, it comes at the cost of decentralization. Liquidity pools suffer from slippage. Thus, executing multiple small orders results in a better exchange rate.
 
 One of the goals of this project is to build a regulated but decentralized aftermarket and to prevent the emergence of a black market with unregulated prices. It must not be possible to find a seller on another platform and perform the ownership transfer through the regulated aftermarket. With the architecture of existing decentralized exchanges such an attack is possible. In this project it is referred as the black market attack and explained in more detail in Section \ref{subsection:black-market-attack}. 
 
@@ -24,7 +24,7 @@ Figure \ref{fig:aftermarket-queue} illustrates how the queuing architecture work
 
 An important note to make is that an order might run into an \textit{out-of-gas exception}, if many consecutive buyers or sellers leave the queue because finding the head of the queue takes multiple loop iterations. In such a scenario, the users has to iterate over all the users that left the queue before finding a buyer/seller. 
 
-This problem can be solved by adding function to the smart contract that reads how many people must be skipped before finding an actual buyer/seller. This must be a read-only function and does not cost any network fees. The result of read operation can be used to set an adequate network fee for the buy/sell order. 
+This problem can be solved by adding function to the SC that reads how many people must be skipped before finding an actual buyer/seller. This must be a read-only function and does not cost any network fees. The result of read operation can be used to set an adequate network fee for the buy/sell order. 
 
 \subsection{Dynamic Pricing}
 To allow dynamic pricing below the original price, an architecture was designed to accomplish multiple buying and selling queues with fixed prices. The creator of an event can configure the aftermarket with an arbitrary number of queues. However, it is a trade-off between granular pricing and the possibility of allowing a black market to emerge. When configuring too many queues, it is possible to facilitate a trade between a buyer and seller from the black market. This can be achieved by selecting a pair of buying and selling queue which both are empty similar to the scenario explained in an open order book in Section \ref{section:aftermarket}. When configuring too little queues, the end user is restricted in setting the desired reselling price. 
@@ -51,7 +51,7 @@ It is also possible that the aftermarket levels at a lower price than the origin
     \label{fig:aftermarket-mixed}
 \end{figure}
 
-Another scenario that is possible can occur when people join the wrong queue. This can occur when a sell and a buy order is processed in the same block or due to wrong interaction with the smart contract. Such a state of the aftermarket is shown in Figure \ref{fig:aftermarket-arbitrage}. There is a person willing to sell a ticket for less than the highest offer on the buyer side. This opens the possibility of arbitrage trading. A third person can buy the ticket at 50\% and immediately resell the ticket again for 75\%. 
+Another scenario that is possible can occur when people join the wrong queue. This can occur when a sell and a buy order is processed in the same block or due to wrong interaction with the SC. Such a state of the aftermarket is shown in Figure \ref{fig:aftermarket-arbitrage}. There is a person willing to sell a ticket for less than the highest offer on the buyer side. This opens the possibility of arbitrage trading. A third person can buy the ticket at 50\% and immediately resell the ticket again for 75\%. 
 
 \begin{figure}[H]
     \centering
@@ -62,7 +62,7 @@ Another scenario that is possible can occur when people join the wrong queue. Th
 
 There are two solutions to solve that problem. Joining the wrong queue due to human error can be eliminated by warning the user in the frontend application that joining the selected queue results in a loss of opportunity cost. 
 
-Solving the issue in the smart contract comes at the price of efficiency. Additional parameter can be introduced to keep track how many people are in each queue. Before each trade, the smart contract evaluates if the described state occurs. However, depending on the granularity of the queues, it might not be feasible to loop over each queue as this results in higher network fees and might lead to an 
+Solving the issue in the SC comes at the price of efficiency. Additional parameter can be introduced to keep track how many people are in each queue. Before each trade, the SC evaluates if the described state occurs. However, depending on the granularity of the queues, it might not be feasible to loop over each queue as this results in higher network fees and might lead to an 
 \textit{out-of-gas exception}.
 
 In this project, a warning in the frontend is displayed when a user attempts to join a queue that is not optimal.
@@ -75,22 +75,20 @@ To prevent this problem and to have fair and clear odds for every guest, a lotte
 The design pattern of the \textit{future blockhash} is used to generate a random number. During the creation of a presale ticket type, a future blocknumber is defined. This block acts as the closing date for the presale as well as the source of randomness. This design patter is a good fit due to its simplicity. There is a chance of manipulation by the miner that adds the block with the defined number by not publishing a block if randomness is not in his favour. However, in order to do so, the miner must resign on the block reward. If this is an actual threat to a ticketing platform, the prices have to be larger than the ticket price. 
 
 \subsection{ERC Standard}
-All three ERC standard explained in Section \ref{subsubsection:token-interfaces} require a function which allows the owner to transfer the token/ticket to another address of his choice. Without explicitly deactivating this function, people are able to sell the ticket on a different platform for higher prices and consequently, allowing a secondary market to emerge. The goal of this project is that there exists only one marketplace/exchange for each event operating transparently on the blockchain. Also, tickets must not transferred in the same way as these ERC standards do.
+All three ERC standard explained in Section \ref{subsubsection:token-interfaces} require a function which allows the owner to transfer the token/ticket to another address of his choice. Without explicitly deactivating this function, people are able to sell the ticket on a different platform for higher prices and consequently, allowing a secondary market to emerge. The goal of this project is that there exists only one marketplace/exchange for each event operating transparently on the BC. Also, tickets must not transferred in the same way as these ERC standards do.
 
 It is be possible to deactivate the transfer function or whitelist a specific exchange address such that tickets could only be sold through this exchange. However, this breaks the design principle of these ERC standards. These standards are developed to create a common interface such that a token can be used across multiple exchanges and the usability is the same among different tokens. Also, tickets must only be resold in one contract to minimize the risk of emerging a black market (as described in Section \ref{section:aftermarket}). Merging the event logic with the aftermarket logic in one contract has a positive side-effect that no extra transaction is needed to approve the aftermarket (DEX). 
 
-Furthermore, the logic for approving and storing other exchanges increases the complexity of the event smart contract and becomes more expensive to create and deploy a new event.
-
-These are the reasons for not implementing any of the ERC interfaces for the event contract and instead creating a new contract from scratch. 
+Furthermore, the logic for approving and storing other exchanges increases the complexity of the event SC and becomes more expensive to create and deploy a new event.These are the reasons for not implementing any of the ERC interfaces for the event contract and instead creating a new contract from scratch. 
 
 
 \subsection{Economics}\label{design:economy}
 
-The economic model works differently in a decentralized system. The entire business logic is stored in public smart contracts that anybody can fork and redeploy. With the proposed design an event host does not need any hardware or software infrastructure to create an event and issue tickets. However, other stakeholders play a crucial role in the ticketing process as shown in the diagram \ref{fig:dlt-based-landscape}.
+The economic model works differently in a decentralized system. The entire business logic is stored in public SC that anybody can fork and redeploy. With the proposed design an event host does not need any hardware or software infrastructure to create an event and issue tickets. However, other stakeholders play a crucial role in the ticketing process as shown in the diagram \ref{fig:dlt-based-landscape}.
 
-The host either relies on trustworthy identity approvers or does his own know your customer (KYC) procedure. To incentivize identity approvers to become trustworthy and to compensate them for their service, a fraction of each ticket price is directly paid to the selected identity approver. Since this is an open design identity approvers compete with others to become popular among the event hosts.
+The host either relies on trustworthy identity approvers or does his own KYC procedure. To incentivize identity approvers to become trustworthy and to compensate them for their service, a fraction of each ticket price is directly paid to the selected identity approver. Since this is an open design identity approvers compete with others to become popular among the event hosts.
 
-Furthermore, the same principle applies for the graphical user interface (GUI) builders. Anybody can interact with the smart contracts. This can either be done directly with the command line interface (CLI) or using a GUI. A GUI provider is also compensated for his service if the ticket is bought through his application. This creates a fair competition among different GUI builder.
+Furthermore, the same principle applies for the graphical user interface (GUI) builders. Anybody can interact with the SC. This can either be done directly with the command line interface (CLI) or using a GUI. A GUI provider is also compensated for his service if the ticket is bought through his application. This creates a fair competition among different GUI builder.
 
 Affiliates are companies or influential people that promote an event. Affiliates are also included in the buying process and are being compensated with a direct payment for each ticket that is bought due to their service. 
 
@@ -101,3 +99,4 @@ Affiliates are companies or influential people that promote an event. Affiliates
     \caption{DLT-based architecture}
     \label{fig:dlt-based-landscape}
 \end{figure}
+

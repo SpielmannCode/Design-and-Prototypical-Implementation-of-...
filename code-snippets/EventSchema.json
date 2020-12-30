@@ -1,0 +1,13 @@
+{     
+    "version": "1.0",
+    "event" : {
+        "title": "string",
+        "location": "string",
+        "category": "string",
+        "description": "string",
+        "time": unix timestamp,
+        "website": "URL string",
+        "twitter": "URL string",
+        "image": "base64"
+    }
+}

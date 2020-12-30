@@ -3,18 +3,18 @@
 \section{Origin Protocol}
 Origin Protocol \cite{origin-protocol-whitepaper} is a platform for building decentralized marketplaces without the traditional intermediaries. It provides a set of tools for building such applications more securely and with less overhead. Origin's target users are the people from the sharing economy such as Airbnb, Uber, Craigslist, etc. However, many concepts and processes for building a decentralized ticketing platform align with those of a decentralized sharing economy. Thus, making it relevant for this project.
 
-The protocol is open-source and consists of a collection of smart contracts and npm packages that allow developers to build decentralized marketplaces. These packages abstract the complexity of the Ethereum blockchain and contain functionalities around transactions, identity management, p2p messaging, p2p storage and governance.
+The protocol is open-source and consists of a collection of SCs and npm packages that allow developers to build decentralized marketplaces. These packages abstract the complexity of the Ethereum BC and contain functionalities around transactions, identity management, p2p messaging, p2p storage and governance.
 
 
 \paragraph{Identity}
-A user becomes more trustworthy when he verifies accounts from other platforms such as Twitter, Airbnb, etc. Origin provides a bridge server who validates such accounts as well as mobile phone numbers and emails. These attestations are then uploaded to IPFS and stores the hash on the Ethereum blockchain. 
+A user becomes more trustworthy when he verifies accounts from other platforms such as Twitter, Airbnb, etc. Origin provides a bridge server who validates such accounts as well as mobile phone numbers and emails. These attestations are then uploaded to IPFS and stores the hash on the Ethereum BC. 
 Using other platforms to increase the authenticity of a user has the advantage that no complex, additional verification service must be implemented. 
 For example, Origin can benefit from the fact that Airbnb checks the passport of every host on their platform. Thus, a user cannot create multiple accounts. Origin implicitly gains this feature almost for free by letting the user copy a unique string into their public Airbnb profile which is then verified by the Origin bridge server.
 The disadvantage is, that they do not have access to the passport if a fraudulent user must be punished and there is no certainty that Airbnb discloses that information.
 
 
 \paragraph{Storage}
-Origin uses IPFS for storing all the metadata that is linked to a user profile or a marketplace listing. This reduces the transaction costs on the Ethereum blockchain while only storing the IPFS hash on-chain. The benefit of using IPFS is that the application does not rely on a single server to host the metadata files. 
+Origin uses IPFS for storing all the metadata that is linked to a user profile or a marketplace listing. This reduces the transaction costs on the Ethereum BC while only storing the IPFS hash on-chain. The benefit of using IPFS is that the application does not rely on a single server to host the metadata files. 
 
 \paragraph{UX}
 During the identity registration process, the user is able to verify his mobile phone number, email and other accounts without paying gas for the transactions. This allows the user to experience the application more similar to what they are familiar with from traditional web and mobile applications. This is made possible due to the Gas Station Network\footnote{\url{https://gsn.openzeppelin.com/}} which allows an account to pay for the transaction costs of another account. Only a signed message by the user's account is needed. 

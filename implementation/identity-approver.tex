@@ -1,4 +1,4 @@
-\section{Identity Approver}\label{imp:dientiy}
+\section{Identity Approver}\label{imp:identity}
 The Identity Approver is a Java based Spring Boot application. The app is structured into four main components, the controller classes, the entity classes the repository interfaces and the service classes. Dependency injection is used to build up the application with the right instances of classes.
 This section further explains the different components. The complete implementation can be found on \href{https://github.com/bc-ticketing/identity-approver}{github}.
 
@@ -28,7 +28,7 @@ The other classes implement all the other required logic. This approach was chos
 The AwsServiceImpl class is used in the process of identifying with our kyc-like process. Aws Rekognition is used to compute the similarity of the faces provided (selfie against photo on passport). The class allows us to upload the files to aws and compute this similarity. The application property similarityThreshold defines, how similar faces must be, in order to be counted as from the same person.
 
 \subsubsection{Blockchain}
-The BlockchainServiceImpl class provides the logic to allow a standard Java application to connect to the ethereum blockchain network using web3j. It can interact with the identity smart contract. It is used to get the current level a guest is having. This is done to not downgrade a users level after proofing with a lower level identity. Furthermore, it is also the class that is used to store the identity proof to the chain. Since this transaction changes the state of the ethereum blockchain, the identity approver needs to provided a funded ethereum address and invest money. This initial investment is repaid when a guest buys a ticket, where the given identity approver is required as described in section \ref{sc:econom}.
+The BlockchainServiceImpl class provides the logic to allow a standard Java application to connect to the ethereum BC network using web3j. It can interact with the identity SC. It is used to get the current level a guest is having. This is done to not downgrade a users level after proofing with a lower level identity. Furthermore, it is also the class that is used to store the identity proof to the chain. Since this transaction changes the state of the ethereum BC, the identity approver needs to provided a funded ethereum address and invest money. This initial investment is repaid when a guest buys a ticket, where the given identity approver is required as described in section \ref{sc:econom}.
 
 \subsubsection{Other}
 The OCRService class provides the application with the logic to use the tesseract library in order to process a picture containing text. 

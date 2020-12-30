@@ -1,1 +1,63 @@
 \section{Description of Work}
+
+This MAP needs to cover a real-world use case. Several aspects of ticket generation and its purchase have to be well studied and detailed knowledge of related work is needed. The key initial questions, measures, and required steps for this MAP are listed below, but are not limited to these items to be addressed as follows:
+
+\begin{itemize}
+    \item Study the current workflow from organizing an event to issuing tickets and entering the venue.
+    \item Design and develop a ticketing platform for issuing, selling, and reselling tickets that acts as a single point of reselling, too.
+    \item The developed platform has to operate as the only reselling point, such that reselling tickets shall not be possible on other platforms such as eBay.
+    \item The developed platform has to prevent tickets from being counterfeited or copied, i.e., enabling security by design.
+    \item Despite the real world, the issued tickets in the developed platform cannot be resold to higher prices.
+    \item The developed platform enables decentralized exchange for reselling tickets to incorporate parties.
+    \item Make the frontend responsible for storing data.
+    \item The developed platform has to provide two frontend applications:
+    \begin{enumerate}
+        \item Managing tickets and identity as for ticket buyers.
+        \item Managing events and access control for event hosts.
+    \end{enumerate}
+    \item The developed platform has to accept stable coins for value preservation.
+    \item Using platforms such as Uniswap\footnote{\url{https://uniswap.org}}, or Kyber Network\footnote{\url{https://kyber.network}} to exchange crypto-currencies.
+    \item One feature of the developed platform will follow a lottery-like presale distribution scheme design, such that a fair and transparent way of issuing tickets to buyers is implemented. By which, there will be no advantages for early buyers. Thus, regardless of the purchase time, every buyer will be in a similar situation, i.e., will have the same chance of buying tickets. People can register for tickets during the presale phase where no tickets are issued yet. A transparent lottery on-chain will distribute the tickets to the lucky winners. Therefore, there is no congestion on the BC and no surge in gas prices at the time of selling tickets.
+    \item The developed platform has to provide a transparent and instant payout for marketing firms/affiliate partners.
+    \item In the developed platform, dynamic pricing can be possible only for the amounts below the original ticket price. This allows the ticket owner to resell his/her ticket only for a lower price.
+    \item Storing information about events in a decentralized manner and efficient way: Only hash of the data, stored on the Interplanetary File System (IPFS), is stored in the SC.
+\end{itemize}
+
+
+Avoiding fraudulent events and security risks:  
+\begin{itemize}
+    \item Requires a deposit to host an event, if a majority of ticket holders claim a fraudulent refund.
+    \item The frontend decides which events are authentic.
+    \item Proof/indication from a trusted platform such as twitter. In this case, a post from a company verified by the trusted platform legitimizes an event.
+    \item Linking a ticket and the platform to an identity provision mechanism: ERC725\footnote{\url{https://erc725alliance.org}} standard to be used. Other user-related information such as buyer's phone number and national ID shall be used. Identity verification platforms, such as Onfido\footnote{\url{https://onfido.com}} has to be integrated within this platform to provide identity verification.
+\end{itemize}
+
+Invalidating tickets at the entrance of the venue:
+\begin{description}
+    \item[Active finalization] A ticket holder has to finalize the ticket before entering and after that step, the ticket cannot be resold anymore. At the venue's entrance tickets finalized cannot be resold to another person, thus, the only person valid can enter directly. Unfinalized tickets are first requested to be finalized before the event organizer grants access and invalidates the ticket.
+    \item[Passive finalization] Tickets can only be resold until 1 hour before the entrance opening time.
+\end{description}
+
+
+Preserving privacy by hiding buyer identity and data from past events in the platform is necessary. For this purpose, storing the hash of a passport number is not sufficient, since the nature of a passport number is to be known and it can be easily reconstructed with a brute force attack. Storing the hash of the passport concatenated with additional parameters such as the buyer's phone number makes a brute force attack much more expensive. Possible additional information that is being added can come from questions such as "What is the name of your first pet?" or it could also be organized as a one-time seed (stored in the app) which has to be provided at the entrance. Storing the hash of the passport-number and the sign(eventId + ticketId) provided by the buyer at the time purchasing a ticket, on the chain needs to be investigated. The event organizer can invalidate a ticket at the time buyer enters the event, by signing the ticketId, which the visitor has to provide when entering the event. Optionally, a signature can be provided from a mobile device with a fingerprint or face id.
+
+Incorporate marketing firms to get their share:
+\begin{itemize}
+    \item A beneficiary can be set as part of a ticket sale in the SC. The event organizer can define a parameter, which decides the percentage that goes to third parties, such as affiliates.
+    \item Every ticket sale can provide an affiliate link in the form of an Ethereum address. At the time of buying the ticket that affiliate directly receives a percentage.
+    \item Every event host e.g., an ice hockey match, keeps the track of valid affiliate addresses e.g., UZH, ETH, and Coop. Only these affiliate addresses can receive an affiliate promotion e.g., for students, or customers.
+\end{itemize}
+
+Additionally, the design of the ticketing platform has to cover the following considerations and features to be implemented.
+\begin{itemize}
+    \item One buyer shall be able to own multiple tickets, linked to his/her account (e.g., tickets for a family).
+    \item Limit the total number of tickets to a constant number when creating an event.
+    \item Event host has to pay for the gas costs.
+    \item Enabling easy to use fiat money to cryptocurrency exchange with Gas Station Network\footnote{\url{https://gsn.openzeppelin.com/}}.
+    \item The ticket validation process takes place while a ticket is scanned at the entrance.
+    \item Directly fund the Ethereum wallet with a credit card.
+    \item Different types of auctions for ticket selling have to be available.
+    \item Escrow contract for keeping funds needed which will keep the funds until the event end.
+\end{itemize}
+
+Documentation: In the end, a concise, detailed, clear, and well-written report is expected, which includes design decisions and justifications, the prototype description, the installation process, dependencies, commented code, and all relevant details as well as characteristics of the methods evaluated and compared. Note that this MAP may demand ad-hoc decisions and updates of those steps determined to ensure a successful and correct outcome.
