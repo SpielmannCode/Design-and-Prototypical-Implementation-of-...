@@ -1,27 +1,24 @@
-\section{Identity Approver}
+\section{ID Approver}\label{section:id-approver-design}
 % author: Nicolas Spielmann
 
-The core idea of the Identity Approver is to allow guests to verify claims of ownership over an identity and store the linked Ethereum address with the provided identity, once the verification process was completed successfully. This is, to avoid the misuse of identities such as using it multiple times. In the following section, the concept of Identity is described.
+The core idea of an ID approver is to allow guests to verify claims of ownership over an identity and store the linked Ethereum address with the provided identity, once the verification process was completed successfully. This is, to avoid the misuse of identities such as using it multiple times. In the following section, the concept of identity is described.
 
 \subsection{Identity}\label{design:identity}
 Since the goal of the project was to come up with a decentralized ticketing platform, a decentralized design of identity was needed. Therefore, following approach of identity and identity verification was provided.
 
-Identity is a chain of claims and proofs. For example, to obtain a passport for a newborn child, the birth certificate of the child is required. In this example, the birth certificate is the proof. The government then uses this proof, checks it and then issues the requested passport. As it is not feasible to request the birth certificate of every event guest, it is suggested to use something, that goes through a KYC-Process when obtaining it. One of these products would be a phone number, since those can only be obtained when providing an identity. Therefore we can verify an identity of a guest by checking, whether he has ownership over the phone number he claim is liked to his identity. Once this check is successful, the level of identity verification of the linked Ethereum address is set on the identity SC. This has the benefit of only needing to store integers that represent a level of proof linked to the Ethereum address. Confidential data is only stored off chain at the identity approver.
+Identity is a chain of claims and proofs. For example, to obtain a passport for a newborn child, the birth certificate of the child is required. In this example, the birth certificate is the proof. The government then uses this proof, checks it and then issues the requested passport. As it is not feasible to request the birth certificate of every event guest, it is suggested to use something, that goes through a KYC process when obtaining it. One of these products would be a phone number, since (in Switzerland) those can only be obtained when providing an identity. Therefore, an identity of a guest can be verified by checking, whether he has ownership over the phone number he claims to possess. Once this check is successful, the level of identity verification of the linked Ethereum address is set on the identity SC. This has the benefit that only integers that represent a level of proof linked to the Ethereum address need to be stored on the BC. Confidential data is only stored off chain by the ID approver.
 
-To achieve a decentralized solution for approving identities, it was suggested to automate this identity approving process and allow everybody to act as an identity approver. Therefore, everybody can register itselfe on the identity SC as an approver and also use its own idea and implementation of identity proofs.
-This leads to the host having to decide, which identity approver he wants to use for his event. 
+To achieve a decentralized solution for approving identities, the designed approach allows to automate the identity approving process and allow anybody to act as an ID approver. Hence, anybody may register on the identity SC as an ID approver and also use its own idea and implementation of identity proofs.
+Ultimately, this leads to the host to decide which ID approver he wants to use for his event.
 
 \subsection{Sample Design}
-For the scope of the project, the idea was to provide an easy to run example implementation of this automated identity approver application. The sample implementation knows three different levels of identity.
+%For the scope of the project, the idea was to provide an easy to run example implementation of this automated ID approver application. The sample implementation knows three different levels of identity.
+Given the scope of the project, an easy way to run an example of an automated ID approver application was designed. The sample ID approver is designed to support the following three levels of identity.
 
 \begin{itemize}
-    \item The first level is verification by an email address. To verify the ownership, the application uses the in Spring included mail implementation. The mail address and its credentials are set in the application properties. For testing purpose, a dedicated gmail address has been created and used to send the random sequence via mail.
+    \item The first level of identity is the verification of an email address. To verify the ownership, the application uses the native Spring Boot mail implementation.
     
-    \item The second level of identity is verification of a phone number. To send text messages to a phone number, Twilio is used. Twilio provides an easy to use API for Spring Boot, that can be used to send text messages. 
+    \item The second level of identity is the verification of a phone number. Twilio\footnote{\href{https://www.twilio.com/}{https://www.twilio.com/}}, an easy to use API for Spring Boot, is used to send a text message to a phone number.
     
-    \item The third level of identity verification is a KYC-like process. It requires the user upload a picture of the machine readable part of his passport, a picture of the whole passport and a selfie. The OCR(Optical character recognition)-Software Tesseract\footnote{\url{https://en.wikipedia.org/wiki/Tesseract_(software)}} is used to extract the text from the machine readable part of the document and the correctness is checked . Afterwards the similarity of the picture on the passport and the selfie is calculated using AWS. 
+    \item The third level of identity is the verification through a KYC-like process. The Optical character recognition (OCR) software Tesseract\footnote{\href{https://en.wikipedia.org/wiki/Tesseract_(software)}{https://en.wikipedia.org/wiki/Tesseract\_(software)}} is used to extract text from a machine readable part of a document. AWS is then used to calculate the similarity of a selfie and the picture on the passport.
 \end{itemize}
-
-
-
-

@@ -2,13 +2,13 @@
 
 \section{Smart Contracts}\label{sec:smart_cont:eval}
 
-At the time of writing this evaluation (30th of October 2020), the current gas prices is 34 Gwei for average transaction speed and 1 ETH is worth 380 USD. For all the analysis these values are used.
+At the time of writing this evaluation (30th of October 2020), the current gas prices was 34 Gwei for average transaction speed and 1 ETH is worth 380 USD. For all the analysis these values are used.
 
 \subsection{Gas Cost Analysis}\label{subsection:gas-cost-analysis}
 
 \subsubsection{Deployment of the Smart Contracts}
 
-A factory pattern is applied in this project. The factory is responsible to create new events and to keep track of already created events. This contract is lightweight but it imports the event contract which holds most of the functionality. The \textit{EventFactory} contract must only be deployed once. 
+A factory pattern is applied in this project. The factory is responsible to create the SC for new events and to keep track of already created events. This contract is lightweight but it imports the event contract which holds most of the functionality. The \textit{EventFactory} contract must only be deployed once. 
 
 The contracts are built in a way that the entire event specific functionality is maintained in the \textit{Event} contract. Deploying a new instance of a SC is expensive. Section \ref{subsection:gas-cost-analysis} shows this in more detail. Thus, combining all the functionality for managing fungible as well as non fungible ticket types in one contract results in lower gas costs for the event host. 
 
@@ -22,7 +22,7 @@ Identity          & 1.17                         & 311961            & 0.011    
 EventFactory      & 23.93                       & 5367566           & 0.182              & 69.34              \\ \hline
 Event             & 21.61                        & 4756013           & 0.162              & 61.45              \\ \hline
 \end{tabular}
-\caption{Gas cost analysis of smart contracts}
+\caption{Gas cost analysis of SCs}
 \label{tab:gas-cost-analysis-sc}
 \end{table}
 
@@ -110,7 +110,7 @@ no             & public            & 0.17                   & 90563             
 yes            & private           & 0.18                   & 93599             & 1.21               \\ \hline
 yes            & public            & 0.22                   & 102243            & 1.32               \\ \hline
 \end{tabular}
-\caption{Deployment Gas Cost Analysis}
+\caption{Deployment gas cost analysis}
 \label{tab:deployment-gas-cost-analysis}
 \end{table}
 
@@ -125,21 +125,19 @@ The anatomy of an IPFS CID (Content Identifiers) multihash is shown in Figure \r
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{images/multihash.jpg}
-    \caption{Anatomy of IPFS Multihash\protect\footnotemark}
+    \caption{Anatomy of IPFS multihash \cite{multihash}}
     \label{img:anatomy-of-ipfs-multihash}
 \end{figure}
-
-\footnotetext{\url{https://github.com/multiformats/multihash}}
 
 \newpage
 \begin{figure}[H]
     \lstinputlisting[language=Solidity]{code-snippets/IPFSStorage.sol}
-    \caption{Contract for transaction cost alanysis}
-    \label{code:ipfs-storage}
+    \caption{Contract for transaction cost analysis}
+    \label{code:transaction-gas-cost-analysis}
 \end{figure}
 
 
-The contract defines four different methods for storing an IPFS multihash. Table \ref{tab:transaction-gas-cost-analysis} illustrates the gas costs for the different methods. As shown in these examples, the gas prices can be reduced by more than 70\% when storing an IPFS CID in the logs with data types of distinct length.
+The contract represented in Figure \ref{code:transaction-gas-cost-analysis} defines four different methods for storing an IPFS multihash. Table \ref{tab:transaction-gas-cost-analysis} illustrates the gas costs for the different methods. As shown in these examples, the gas prices can be reduced by more than 70\% when storing an IPFS CID in the logs with data types of distinct length.
 
 \begin{table}[ht]
 \centering
@@ -151,14 +149,14 @@ The contract defines four different methods for storing an IPFS multihash. Table
 3               & log              & string             & 27675             & 0.001              & 0.35               \\ \hline
 4               & log              & bytes              & 25841             & 0.001              & 0.33               \\ \hline
 \end{tabular}
-\caption{Transaction Gas Cost Analysis}
+\caption{Transaction gas cost analysis}
 \label{tab:transaction-gas-cost-analysis}
 \end{table}
 
 \subsection{Correctness}
 Evaluating the correctness of the contracts is done with a collection of tests. In total more than 90 automated integration tests are present. With this testing suite inconsistencies can be located quickly if updates are made to the contracts. 
 
-\subsection{Discussion}
+\subsection{Discussion}\label{sec:discussion-evaluation-sc}
 %connection all the point made in the evaluation
 As shown in the gas price analysis, a new event is expensive to deploy but creating ticket types and minting new tickets is around 1 USD per ticket and type. However, the main benefit from this design is that the host and the guests must sign transactions as seldom as possible. Multiple non-fungible tickets of different types can be minted within the same transaction. This concept is applied to all the transactions in the ticket distribution, presale, as well as the aftermarket. One can create multiple presales with one transaction. Also, it is possible to create a buy order for multiple fungible as well as non-fungible types within a single transaction. Thus, the user experience is more like a traditional application where a customer only has to sign a transaction when the shopping cart is checked out.
 
@@ -167,3 +165,8 @@ The functionality of using other currencies such as stable coins are integrated 
 Solidity limits the size of a contract to 24KB. \cite{solidity-contract-size}. By encapsulating common functionality, data structures and constants into a shared library, the contract size is kept under this threshold. As explained in Section \ref{subsection:event-log-vs-public-getters}, the contract size can be reduced by either only using public getters or only the event log for accessing data. However, new features may increase the contract size such that it may no longer be deployed. In such a scenario, it could make sense to outsource the aftermarket functionality to a separate contract where one contract could manage the aftermarkets of all events.
 
 Gas prices have risen by a factor of three since April 2020 \cite{ethereum-gas-price-chart}. Building a second layer solution was considered to lower the transaction fees. However, all layer two solutions in the Ethereum ecosystem such as Plasma \cite{plasma}, zkRollup \cite{zkrollup}, Optimistic Rollup \cite{optimistic-rollup} require the user to first deposit some cryptocurrency in the child chain. This deposit transaction is made on the main chain and thus, gas costs add up to a similar price as directly buying a ticket from the event SC. Since these coins are locked up in the child chain, users cannot use them outside of the child chain and would not be willing to deposit more than needed to buy tickets for one event. A second layer solution can make sense if tickets are invalidated on-chain or the ownership of a ticket is transferred multiple times. Otherwise, there is no radical benefit for this application using a second layer solution. 
+
+To mitigate fraudulent events, it was initially intended that an event host has to make a deposit when creating an event. If many of the event guests signal that the event is fake, the deposit could be used to compensate for the fake tickets. However, this design was abandoned and instead, a more user-friendly architecture with less user interactions is in place. Trust between the host and guest can established with social proofs and trust certificate. This design does not require any on-chain interactions to verify that event host is who he claims to be. Furthermore, an event host often has to pay bills for the event in advance and an additional deposit that is locked until the end of an event can become a problem for event hosts. 
+
+Different types of ticket sales are part of the task description. With the regular ticket sale and the lottery presale, the most common two kinds are implemented. However, with the modular SC architecture, it is possible to extend the functionality with more complex auction mechanisms.
+

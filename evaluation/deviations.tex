@@ -1,0 +1,8 @@
+\section{Deviations}
+This section covers all the deviations from the initial description of work as stated in Subsection \ref{chapter:introduction:descriptionOfWork}, if they were not described in the preceding sections.
+
+\subsection{Wallet Funding}
+In the initial plan of features for the guest GUI it was planned to include connections to cryptocurrency exchanges services, in order to swap between different currencies within the application. Also included was the idea of funding the user's wallet directly with a credit card. These two requirements were not implemented due to several reasons. On one hand there are legal requirements for wallet funding and dealing with those was clearly out of scope for the project. Additionally, this functionality is inherently available through the use of third party wallet applications which usually provide this functionality. Thus the guest application can remain more lightweight and is not concerned by legal regulations while not losing any functionality, since a mobile wallet application is anyways required for interacting with the BC.
+
+\subsection{Gas Station Network}
+The initial Idea of a gas station network, was to pay for the gas needed to approve the identity of a guest to not have the guest pay upfront before buying the ticket. With the current implementation of the identity concept and the underlying SC, the transaction confirming the identity of the guest is done by the ID approver, therefore having him pay the for the Gas. This change made the Gas station network irrelevant for the use case.

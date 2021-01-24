@@ -1,15 +1,15 @@
 \section{Smart Contracts}
 
-A collection of SC is used to efficiently manage the creation of the new event, the distribution of the tickets and also the registration of guest identities. Figure \ref{fig:smart-contract-overview} illustrates the architecture and their dependencies. The bold contracts are deployed only once whereas the \textit{EventContract} is newly deployed for every event. The library contains common, stateless functionality across multiple contracts. The \textit{EventContract} inherits its functionality from the SC modules. These modules act as building blocks for creating contracts with different functionality. The contracts with a dotted outline add optional functionalities. This design pattern is chosen to reduce the deployment costs and is also used for ERC standards such as the ERC20 \cite{solidity-inheritance}. It allows an event host to be specific on the functionality of the contract and only deploy the necessary functionality. For example as shown in the Figure \ref{code:smart-contract-inheritance}, it is possible to create an event without an aftermarket if the host desires to do so. Each of the building blocks is described in more detail in the following sections.
+A collection of SCs is used to efficiently manage the creation of the new event, the distribution of the tickets and also the registration of guest identities. Figure \ref{fig:smart-contract-overview} illustrates the architecture and their dependencies. The bold contracts are deployed only once whereas the \textit{EventContract} is newly deployed for every event. The library contains common stateless functionality across multiple contracts. The \textit{EventContract} inherits its functionality from the SC modules. These modules act as building blocks for creating contracts with different functionality. The contracts with a dotted outline add optional functionalities. This design pattern is chosen to reduce the deployment costs and is also used for ERC standards such as the ERC20 \cite{solidity-inheritance}. It allows an event host to be specific on the functionality of the contract and only deploy the necessary functionality. For example as shown in the Figure \ref{code:smart-contract-inheritance}, it is possible to create an event without an aftermarket if the host desires to do so. Each of the building blocks is described in more detail in the following sections.
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \centering
     \includegraphics[width=14cm]{figures/smart-contract-overview-4.png}
-    \caption{SC Dependencies Overview}
+    \caption{SC dependencies overview}
     \label{fig:smart-contract-overview}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \lstinputlisting[language=Solidity]{code-snippets/Inheritance.sol}
     \caption{Modular design pattern using inheritance}
     \label{code:smart-contract-inheritance}
@@ -17,19 +17,19 @@ A collection of SC is used to efficiently manage the creation of the new event, 
 
 
 \subsection{Event}
-This building block is compulsory since it contains all the core functions and data structures that are used by the other contracts. The goal is to build a single contract for each event that manages the distribution and aftermarket of fungible as well as non-fungible tickets. The heart of the contract is the state that keeps track of the ownership of the tickets. For this a double mapping is used as shown in the Figure \ref{code:tickets} to to efficiently store and retrieve tickets from the contract.
+This building block is compulsory since it contains all the core functions and data structures that are used by the other contracts. The goal is to build a single contract for each event that manages the distribution and aftermarket of fungible as well as non-fungible tickets. The heart of the contract is the state that keeps track of the ownership of the tickets. For this a double mapping is used as shown in Figure \ref{code:tickets} to efficiently store and retrieve tickets from the contract.
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \lstinputlisting[language=Solidity]{code-snippets/Tickets.sol}
-    \caption{Tickets Mapping}
+    \caption{Tickets mapping}
     \label{code:tickets}
 \end{figure}
 
 
 \subsection{Mintable}\label{sec:tickets}
-The \textit{Mintable} contract is responsible for issuing new tickets. In order to differentiate between multiple ticket types, the following encoding schema was used for the ticket id. A ticket id is made up of three parts and is stored as a \textit{uint256} datatype. The first bit is the \textit{nf flag} which indicates if the ticket is fungible or non-fungible. If this bit is set, it is considered to be non-fungible otherwise fungible. 
+The \textit{Mintable} contract is responsible for issuing new tickets. In order to differentiate between multiple ticket types, the following encoding schema was used for the ticket id. A ticket id is made up of three parts and is stored as a \textit{uint256} datatype. The first bit is the \textit{nf flag} which indicates whether the ticket is fungible or non-fungible. If this bit is set, it is considered to be non-fungible, otherwise fungible. 
 
-The following 127 bits hold the ticket type and which is a counter that is incremented with every new type that is created. The type is used to store information that applies to all the tickets of that same type. 
+The following 127 bits hold the ticket type which is a counter that is incremented with every new type that is created. The type is used to store information that applies to all the tickets of that same type. 
 
 The last 128 bits are used for non-fungible tickets only. They store the id of a specific ticket. This is only relevant to non-fungible tickets since fungible tickets do not need an id as fungible tickets of the same type are indifferent to each other. For fungible tickets these bits are untouched and remain 0.
 
@@ -45,31 +45,31 @@ As an example one can think of a seating area where each seat has an id. For suc
 With this encoding schema it is possible to store tickets of different types in the same mapping. Furthermore, using efficient shift operations and bitwise comparators the id can be decoded as shown in Figure \ref{code:tickets-decoding}. A similar encoding schema is also used for ERC1155 contracts \cite{erc1155}.
 
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \lstinputlisting[language=Solidity]{code-snippets/TicketsDecoding.sol}
-    \caption{Tickets Decoding}
+    \caption{Tickets decoding}
     \label{code:tickets-decoding}
 \end{figure}
 
 
 \subsection{Presale}\label{section:imp:presale}
-To implement fair odds for the presale lottery, a user can only place one presale order for one ticket. The presale order will be placed in a list on the BC. Every new presale order will be appended to the list. When the presale is over and the lottery is triggered, a random number in the range from zero to of the number of presale orders is generated. The list of buy orders will then be cast to a ring by connecting the head with the tail of the list. The winners of the lottery are defined by the \textit{n} guests starting at the index which is defined by the generated random number.
+To implement fair odds for the presale lottery, a user can only place one presale order for one ticket. The presale order will be placed in a list on the BC. Every new presale order will be appended to the list. When the presale is over and the lottery is triggered, a random number in the range from zero to the number of presale orders is generated. The list of buy orders will then be cast to a ring by connecting the head with the tail of the list. The winners of the lottery are defined by the \textit{n} guests starting at the index which is defined by the generated random number.
 
 Figure \ref{fig:ring-lottery} shows an example where ten people signed up for the lottery but only five tickets are available. The random number evaluates to 7. The green boxes indicate the winners. 
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \centering
     \includegraphics[width=14cm]{images/lottery.png}
-    \caption{Ring Lottery Example}
+    \caption{Ring lottery example}
     \label{fig:ring-lottery}
 \end{figure}
 
-This ensures fair odds for everybody and also lets people that want to attend an event together maximize the chance that both win the lottery, by placing their presale order at the same time and therefore try to get a place in the list next to each other.
+This ensures fair odds for everybody and also lets people that want to attend an event together maximize the chance that they all win the lottery by placing their presale order at the same time and therefore try to get a place in the list next to each other.
 
 \subsection{Aftermarket}
 This optional building block adds the functionality of a decentralized exchange. It implements the queuing architecture as described in Section \ref{section:aftermarket}. A queue is constructed of two structs as show in Figure \ref{code:queue}. The members \textit{head} and \textit{tail} act as pointers to efficiently perform operations on the queue such as \textit{pop} and \textit{enqueue}. This data structure is used for the buying and the selling queue. 
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \lstinputlisting[language=Solidity]{code-snippets/Queue.sol}
     \caption{Queue in a solidity contract}
     \label{code:queue}
@@ -78,25 +78,22 @@ This optional building block adds the functionality of a decentralized exchange.
 If a user wants to withdraw from a queue, he must provide his position in the queue to efficiently perform this task without the need of looping over the entire queue. This index is emitted as a Solildity event when a user is enqueued. 
 
 \subsection{Library}
-A library in Solidity allows to deploy common functionality that does access the state of the contracts. For example, the functions shown in Figure \ref{code:tickets-decoding} are all deployed as part of a library. But also error messages and other constants are outsourced to the library. This helps in managing code consistency and reduces redundancy.
+A library in Solidity allows to deploy common functionality that accesses the state of the contracts. For example, the functions shown in Figure \ref{code:tickets-decoding} are all deployed as part of a library. But also error messages and other constants are outsourced to the library. This helps in managing code consistency and reduces redundancy.
 
 \subsection{Identity}
-This building block is essential to achieve the goal of eliminating an aftermarket run by scalpers. The identity contract is used to store identity proofs to the BC. An off-chain service checks the guest's identity. The proof of the identity is stored using a double mapping from the approver's Ethereum address to the guests' Ethereum address. This is explained in more detail in Section \ref{imp:identity}.
+This building block is essential to achieve the goal of eliminating an aftermarket run by scalpers. The identity contract is used to store identity proofs to the BC. An off-chain service checks the guest's identity. The proof of the identity is stored using a double mapping from the ID approver's Ethereum address to the guests' Ethereum address. This is explained in more detail in Section \ref{imp:identity}.
 
-In order for an identity approver to be able to save identity proofs for other guests to the BC, he has to register as an identity approver first. To do this, the approver provides information about the kind of identity procedures he is using. This information is stored to IPFS. The IPFS hash is saved to the SC to register the approver.
+In order for an ID approver to be able to save identity proofs for other guests to the BC, he has to register as an ID approver first. To do this, the ID approver provides information about the kind of identity procedures he is using. This information is stored to IPFS and the according IPFS hash is saved to the SC to register the ID approver.
 
 \subsection{Economics}\label{sc:econom}
 Paying all involved stakeholders in a transparent matter is crucial for a system without a regulating entity. Thus, the SC allows to pass affiliate addresses and GUI builders as arguments for methods such as buying a fungible ticket (Figure \ref{code:buy-ticket-function}). A GUI builder can include his Ethereum address in the frontend application and receives a cut for every ticket sold on his application. 
 
-Besides the GUI provider's address, additional affiliates address can be passed in the argument. Affiliates are marketing companies or influential people that advertise the venue to the event guests and redirect them to a GUI providers. These entities receive a fraction of the ticket price for the service they provide. Also, the identity providers always receives a fraction of the ticket price as shown in Figure \ref{code:buy-ticket-function} on line 22. 
+Besides the GUI provider's address, additional affiliates addresses can be passed in the argument. Affiliates are marketing companies or influential people that advertise the venue to the event guests and redirect them to a GUI provider. These entities receive a fraction of the ticket price for the service they provide. Also, the identity providers always receive a fraction of the ticket price as shown in Figure \ref{code:buy-ticket-function} on line 22. 
 
 It is important to note that the affiliate has to trust the GUI provider that the affiliate's address is included in the SC call. However, with the proposed design it is also in the GUI provider's interest that other entities redirect guests to their platform. Furthermore, with the open nature of the design, there is no lock-in effect with any of the GUI providers and they can be replaced if they do not behave trustworthy.
 
-\begin{figure}[H]
+\begin{figure}[hbt]
     \lstinputlisting[language=Solidity]{code-snippets/BuyTicketFunction.sol}
     \caption{Buying fungible tickets with affiliate addresses}
     \label{code:buy-ticket-function}
 \end{figure}
-
-
-

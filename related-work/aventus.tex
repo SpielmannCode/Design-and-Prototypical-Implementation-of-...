@@ -16,18 +16,18 @@ Control allows an issuer to protect the value of their digital assets. In order 
 A lack of control can lead to problems such as distribution of fake copies, price inflation in reselling markets, distribution by unauthorised vendors.
 \end{comment}
 
-The Aventus protocol is built on top of an existing public BC network (Ethereum) and handles transactions off-chain. The reason it does this is to overcome the problem of scalability on Ethereum, while still benefiting from its security and independence.
-Transactions within the Aventus protocol are pooled into a Merkle tree and later on the Merkle root is posted onto Ethereum for security and validation, as described later on in \ref{subsection:aventus nodes}.
-This way transactions can be processed and verified more efficiently by Aventus nodes and then batched together into Aventus Blocks and sent to the Ethereum BC, were they are made public.
+The Aventus protocol is built on top of an existing public BC network (Ethereum) and handles some of the transactions off-chain. The reason it does this is to overcome the problem of scalability on Ethereum, while still benefiting from its security and independence.
+Transactions within the Aventus protocol are pooled into a Merkle tree whereas the root is published onto Ethereum for security and validation, as described later on in \ref{subsection:aventus nodes}.
+This way transactions can be processed and verified more efficiently by Aventus nodes and then batched together into Aventus Blocks and sent to the Ethereum BC, where they are made public.
 
 \paragraph{The Aventus Token}
 
-The Aventus token (AVT) is used for transaction payments on the Aventus Protocol, as well as for registration within the protocol to become an Aventus Node, although currently all Nodes in the Aventus overlay protocol are owned by the Aventus corporation. It is also used in the voting process for changes to the protocol and to determine which node processes the next Merkle root and receives the transaction fee reward.
+The Aventus token (AVT) is used for transaction payments on the Aventus Protocol, as well as for registration within the protocol to become an Aventus node, although currently all nodes in the Aventus overlay protocol are owned by the Aventus corporation. It is also used in the voting process for changes to the protocol and to determine which node processes the next Merkle root and receives the transaction fee reward.
 
 \paragraph{Aventus Nodes}\label{subsection:aventus nodes}
 
- An entity can can become an Aventus node through spending a deposit of AVT, however currently these nodes are all owned by the Aventus corporation. Thus the protocol is not inherently fully decentralized until the option to become a node is made public. However the distribution of transaction processing onto multiple nodes before posting them onto Ethereum brings benefits in scalability and security.
- Aventus Nodes are the first entity to receive transaction information from asset transfer platforms, e.g. ticket selling websites. These transactions are broadcasted on to the other Aventus Nodes in the network, creating a pool of unprocessed transactions. All of the unprocessed transactions are then combined into a Merkle tree. The creation of these trees are rewarded with AVT and the root of the tree is then published onto the Ethereum BC. This brings the benefit that only the hash of the Merkle root has to be verified, instead of each transaction individually. When published, the Merkle tree can be challenged by other nodes through the has of the root.
+ An entity can become an Aventus node through spending a deposit of AVT, however currently these nodes are all owned by the Aventus corporation. Thus the protocol is not inherently fully decentralized until the option to become a node is released. However, the distribution of transaction processing onto multiple nodes before posting them onto the Ethereum BC brings benefits in scalability and security.
+ Aventus Nodes are the first entities to receive transaction information from asset transfer platforms, e.g. ticket selling websites. These transactions are broadcasted on to the other Aventus Nodes in the network, creating a pool of unprocessed transactions. All of the unprocessed transactions are then combined into a Merkle tree. The creation of these trees are rewarded with AVT and the root of the tree is then published onto the Ethereum BC. This brings the benefit that only the hash of the Merkle root has to be verified, instead of each transaction individually. When published, the Merkle tree can be challenged by other nodes through the has of the root.
 
 \paragraph{Proof of Authority}
 
@@ -39,9 +39,8 @@ An \textit{asset issuer} can create a set of rules around what defines the asset
 
 \paragraph{Reselling}
 
-When the current owner initiates a transfer, the transaction is signed with their private key in order to prove ownership of the asset. The buyer then associates their public key with the asset and generates any zero-knowledge proof required to acquire ownership of the asset. This is then sent to the Aventus Nodes where the transfer rules are checked and the transaction is processed.
+When the current owner initiates a transfer, the transaction is signed with their private key in order to prove ownership of the asset. The buyer then associates their public key with the asset and generates any zero-knowledge proof required to acquire ownership of the asset. This is then sent to the Aventus nodes where the transfer rules are checked and the transaction is processed.
 
 \paragraph{Asset Redemption}
 
 The Aventus Protocol considers redemption as a \textit{special transfer case}. When an asset class is generated by the issuer, they can specify whether the asset is redeemable, e.g. for tickets, in which case a specific \textit{redemption address} is created on the BC. Once the asset has been transferred to this address, it is irretrievable.
-

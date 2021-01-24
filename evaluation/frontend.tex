@@ -1,6 +1,6 @@
 \section{Blockchain Data Fetching}\label{section:data-model}
 
-A crucial aspect of any BC based application with end user interaction lies within the responsiveness. The guest client application provides an interface that is never blocked for user interaction, except when the user chooses to switch to another cryptocurrency wallet. The data abstraction and storage layer discussed in [ref] underwent multiple iterations during the development process. The following section discusses some performance benchmarks, along with their respective impact on the usability of the application. It also mentions some specific code changes that lead to improvements in certain benchmarks. All benchmarks have been evaluated on an Intel i5-7600 CPU with a clock speed of 3.5GHz and 4 individual cores. The application was accessed through the Chromium browser.
+A crucial aspect of any BC based application with end user interaction lies within the responsiveness. The guest client application provides an interface that is never blocked for user interaction, except when the user chooses to switch to another cryptocurrency wallet. The data abstraction and storage layer discussed in [ref] underwent multiple iterations during the development process. The following section discusses some performance benchmarks, along with their respective impact on the usability of the application. It also mentions some specific code changes that lead to improvements in certain benchmarks. All benchmarks have been evaluated on an Intel i5-7600 CPU with a clock speed of 3.5GHz and 4 individual cores. The application was accessed through the Chromium\footnote{\href{https://www.chromium.org/Home}{https://www.chromium.org/Home}} browser.
 
 \subsection{Baseline - Event Loading}\label{section:bl-events}
 In order to get a solid baseline for event loading times, the application was tasked with fetching event data for three different events, with two, five, and ten ticket types (TT) each. For this experiment no caching mechanism has been used (\textit{cold start}). The loading times are shown in \ref{img:baseline1}. A higher number of ticket types leads to consistently longer loading times, when all other variables such as the number of Solidity events are isolated.
@@ -8,11 +8,11 @@ In order to get a solid baseline for event loading times, the application was ta
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/plot1.png}
-    \caption{Baseline event loading times \protect\footnotemark}
+    \caption{Baseline event loading times}
     \label{img:baseline1}
 \end{figure}
 
-Figure \ref{tab:baseline1} shows mean and average loading times over the course of 20 consecutive runs. The median is consistently lower across this and all later on discussed experiments. This may be attributed to ...
+Table \ref{tab:baseline1} shows mean and average loading times over the course of 20 consecutive runs. The median is consistently lower across this and all later on discussed experiments.
 From Table \ref{tab:baseline1} one can extrapolate a difference of approximately \textit{320ms} in loading times when going from two to five ticket types. The absolute increase in time is slightly lower when going from five to ten ticket types.  
 
 \begin{table}[ht]
@@ -35,7 +35,7 @@ The second baseline was measured in order to capture the effect of user actions.
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/plot2.png}
-    \caption{Baseline User Interactions \protect\footnotemark}
+    \caption{Baseline user interactions}
     \label{img:baseline2}
 \end{figure}
 
@@ -52,7 +52,7 @@ Table \ref{tab:baseline1} displays the mean and the average loading times over t
 4 TT & 1526.70               & 1515.72        \\ \hline
 \end{tabular}
 \caption{Baseline user interaction loading times statistics}
-\label{tab:baseline1}
+\label{tab:baseline2}
 \end{table}
 
 
@@ -63,7 +63,7 @@ One feature specifically enabled by the data abstraction layer is immediate user
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/plot3.png}
-    \caption{Ethereum user account switching times \protect\footnotemark}
+    \caption{Ethereum user account switching times}
     \label{img:user_int}
 \end{figure}
 
@@ -76,19 +76,17 @@ Cold & 2978.96            & 2963.11     \\ \hline
 Warm & 164.99           &  8.98      \\ \hline
 \end{tabular}
 \caption{Ethereum user account switching times statistics}
-\label{tab:baseline1}
+\label{tab:baseline3}
 \end{table}
 
-
 \subsection{Preloading in Detail}\label{section:eval-preloading}
-
 
 In this last evaluation, an event with a large number of user interactions over the course of 858 blocks was prepared on the BC. The application was tasked with completely fetching the event's data while having the information from all Solidity events up to increasing block number cached in the abstraction layer. Figure \ref{img:caching} shows the loading times for each level of cached data. The labels show the block number up until which the data was cached (lower means more data to load). Block 858 was the last block with new Solidity events. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/plot4.png}
-    \caption{User Switching Times \protect\footnotemark}
+    \caption{User switching times}
     \label{img:caching}
 \end{figure}
 
@@ -105,10 +103,10 @@ Table \ref{tab:caching} shows the mean and average loading times for each stage.
 600 & 1381.26         &  750.0    \\ \hline
 800 & 268.80          &  133.41     \\ \hline
 \end{tabular}
-\caption{User Switching Times statistics}
+\caption{User switching times statistics}
 \label{tab:caching}
 \end{table}
 
 \subsection{Discussion}\label{section:eval-discussion}
 
-While the numerical results of the evaluation have displayed the benefits of the local caching mechanisms within the guest client, there are some additional concerns to mention. First and foremost, all of the experiments, if not explicitly stated otherwise, have been conducted on a local BC. This means that the average loading times are not representative of what should be expected on a truly distributed ledger. We argue that this is a further case for the client side caching mechanism as the introduced network overhead could be significantly reduced by only ever requesting from the BC what has never been loaded to the client before, or what has been manually removed from the client by the user.  
+While the numerical results of the evaluation have displayed the benefits of the local caching mechanisms within the guest-client, there are some additional concerns to mention. First and foremost, all of the experiments, if not explicitly stated otherwise, have been conducted on a local BC. This means that the average loading times are not representative of what should be expected on a truly distributed DL. This can be seen as an argument for the importance of the client-side caching mechanism as the introduced network overhead could be significantly reduced by only ever requesting from the BC what has never been loaded to the client before, or what has been manually removed from the client by the user. However a quantitative analysis could improve the assessment quality of this mechanism.

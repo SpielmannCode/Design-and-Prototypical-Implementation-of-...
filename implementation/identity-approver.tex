@@ -1,9 +1,9 @@
-\section{Identity Approver}\label{imp:identity}
-The Identity Approver is a Java based Spring Boot application. The app is structured into four main components, the controller classes, the entity classes the repository interfaces and the service classes. Dependency injection is used to build up the application with the right instances of classes.
-This section further explains the different components. The complete implementation can be found on \href{https://github.com/bc-ticketing/identity-approver}{github}.
+\section{ID Approver}\label{imp:identity}
+The ID approver is a Java based Spring Boot application. The app is structured into four main components, the controller classes, the entity classes the repository interfaces and the service classes. Dependency injection is used to build up the application with the right instances of classes.
+This section further explains the different components. The complete implementation can be found on \href{https://github.com/bc-ticketing/identity-approver}{GitHub}\footnote{\href{https://github.com/bc-ticketing/identity-approver}{https://github.com/bc-ticketing/identity-approver}}.
 
 \subsection{Entity}
-The entity classes are used to represent the different records of data that need to be persisted. In order to make the code easier to read, project lombok\footnote{\url{https://projectlombok.org/}} was used. project lombok provides the automated generation of getter and setter method for all variables of the class and also lets you auto generate constructors. When using this feature, the definition of the class, that holds the data record to save the phone identity is very simple as shown in figure \ref{code:entity}. 
+The entity classes are used to represent the different records of data that need to be persisted. In order to make the code easier to read, project lombok\footnote{\href{https://projectlombok.org/}{https://projectlombok.org/}} was used. project lombok provides the automated generation of getter and setter method for all variables of the class and also lets you auto generate constructors. When using this feature, the definition of the class, that holds the data record to save the phone identity is very simple as shown in Figure \ref{code:entity}. 
 
 
 \begin{figure}[H]
@@ -15,25 +15,23 @@ The entity classes are used to represent the different records of data that need
 The @Table annotation is used to specify the database table the entity is persisted in. The @Id annotation specifies, that this variable is used as the primary key of the database table.
 
 
-
-
 \subsection{Repository}
-Spring boot includes the Java Persistence API (JPA) which allows the serialization and deserialization of entities to persist them into a database. This is done by extending the JpaRepository interface and inputting the entity type and the primary key as generics. This repository can then be used to interact with the database to save and load entities. 
+Spring Boot includes the Java Persistence API (JPA) which allows the serialization and deserialization of entities to persist them into a database. This is done by extending the JpaRepository interface and inputting the entity type and the primary key as generics. This repository can then be used to interact with the database to save and load entities. 
 
 \subsection{Service}
-The service folder contains all the classes responsible for the actual logic of the identity approver. The classes named enititynameIdentityService are used to handle the request from the Rest Controller described in\ref{sec:controller}. The classes named entitynameServiceImpl implement the logic to send a random sequence to the provided identity.
+The service folder contains all the classes responsible for the actual logic of the ID approver. The classes named \textit{\{enitityname\}IdentityService} are used to handle the request from the Rest Controller described in Section \ref{sec:controller}. The classes named \textit{\{entityname\}ServiceImpl} implement the logic to send a random sequence to the provided identity.
 The other classes implement all the other required logic. This approach was chosen to separate the logic. 
 
 \subsubsection{AWS}
-The AwsServiceImpl class is used in the process of identifying with our kyc-like process. Aws Rekognition is used to compute the similarity of the faces provided (selfie against photo on passport). The class allows us to upload the files to aws and compute this similarity. The application property similarityThreshold defines, how similar faces must be, in order to be counted as from the same person.
+The\textit{AwsServiceImpl} class is used in the process of identifying with the KYC-like process. AWS Rekognition is used to compute the similarity of the faces provided (selfie compared to photo on passport). The class allows to upload the files to AWS and then compute the similarity of the faces. The application property \textit{similarityThreshold} defines, how similar faces must be, in order to be considered as representation of the same person.
 
 \subsubsection{Blockchain}
-The BlockchainServiceImpl class provides the logic to allow a standard Java application to connect to the ethereum BC network using web3j. It can interact with the identity SC. It is used to get the current level a guest is having. This is done to not downgrade a users level after proofing with a lower level identity. Furthermore, it is also the class that is used to store the identity proof to the chain. Since this transaction changes the state of the ethereum BC, the identity approver needs to provided a funded ethereum address and invest money. This initial investment is repaid when a guest buys a ticket, where the given identity approver is required as described in section \ref{sc:econom}.
+The \textit{BlockchainServiceImpl} class provides the logic to allow a standard Java application to connect to the Ethereum BC network using web3j. It can interact with the identity SC. It is used to get the current level of identity a guest is having. This is done to not downgrade a users level after proofing with a lower level identity. Furthermore, it is also the class that is used to store the identity proof to the chain. Since this transaction changes the state of the Ethereum BC, the ID approver needs to provided a funded Ethereum address and invest money. This initial investment is repaid when a guest buys a ticket, where the given ID approver is required as described in Section \ref{sc:econom}.
 
 \subsubsection{Other}
-The OCRService class provides the application with the logic to use the tesseract library in order to process a picture containing text. 
+The \textit{OCRService} class provides the application with the logic to use the tesseract library in order to process a picture containing text. It takes an image and extrects the text of this given image, using a pre-trained OCR modell. 
 
-The securityServiceImpl is used to verify signatures in order to proof ownership over an ethereum address.
+The \textit{securityServiceImpl} is used to verify signatures in order to proof ownership over an Ethereum address. This is done by recovering the signature from the given message signature. 
 
 
 \subsection{Controller}\label{sec:controller}

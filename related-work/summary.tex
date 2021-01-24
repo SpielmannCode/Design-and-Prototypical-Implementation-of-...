@@ -1,3 +1,24 @@
+\section{Conclusion}
+
+Table \ref{tab:overview-competitors} summarizes all the competitors with the key characteristics. Most project identified very similar inefficiencies in the ticketing industry. However, there is no platform that lets the user buy a ticket with a BC wallet and at the same time links the ticket to some form of identity such that the ticket cannot be resold on a secondary market. Even though Origin Protocol fulfills both of these criteria, their product is not streamlined for event ticketing. They focus mainly on decentralized market places and e-commerce. Managing events and issuing tickets cannot be done within their application.
+
+GUTS and Blockparty do not support true ownership by letting the user manage the private key. Although these projects market their application as a decentralized ticketing platforms, the private keys are managed by the companies themselves. This makes the accounts of these companies a central point of failure and puts all the tickets in the system at risk.
+
+Except for the Aventus protocol, a second layer solution for higher transaction throughput has not been implemented for any of the other projects. The reason for this design decision may come from the novelty of second layer solutions or due to the fact that it requires a transaction on the main network to deposit funds in the second layer. And since most event guests only create one transaction when buying the ticket, the benefits of a second layer do not effect the majority of the event guests. More information about different second layer solutions in Section \ref{sec:discussion-evaluation-sc}.
+
+Creating a native token has the purpose to fund the developers behind the project. In projects such as Blocktix the token has a multi-purpose. However, some of these purposes such as using it as a form of payment adds a layer of complexity since most users do not own such platform specific tokens and event guests must first swap tokens. For payments and deposits it is more user-friendly when a common currency such as ETH or a wildly adopted stablecoin such as DAI can be used. One purpose of a platform specific token which cannot be replaced with a common currency is governance. Token holders can vote on protocol updates. For this project it does not make sense creating a platform specific token since no funding is required and the focus is not on how the protocol can be governed in a decentralized manner.
+
+IPFS is used by must of the examined protocol and seems to be a good fit for storing event and ticket metadata in a decentralized manner. Ethereum is used by most of the examined projects. Storing IPFS hashes on Ethereum has become a common design principle when applications need to store data in a decentralized manner outside of the SC.
+
+Except for Origin Protocol, none of the investigated protocols integrates stablecoins as a mean of payment. This exposes the event host and guests to the price fluctuation of crypto-currencies and may discourage end users from using the platform. 
+
+The design for managing identities and preventing fraudulent profiles by the Origin Protocol is a novelty among these projects. Their implemented architecture promises decentralized solution to this complex problem. 
+
+Except for GUTS, none of the projects prohibits a ticket holder from reselling a ticket for more than the original price. This inefficiency often leads to frustration for event guests and is identified as one of the main problems in the ticketing industries in explained in Section \ref{sec:problem-statement}.
+
+As shown in this chapter, none of these project seems to tackle all the inefficiencies that are identified during the research of this project. Also, some of the projects use BC for marketing purposes while offering a centralized product. Furthermore, the research has shown that there is a need for a platform that addresses the inefficiencies in the ticketing industry. 
+
+
 \begin{landscape}
 
 \begin{table}[H]
@@ -11,15 +32,15 @@ Form of linked identity         & \xmark         & \cmark            &  ?       
 Resell possible?                & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
 Mechanism for presale           & \cmark         & \xmark            & \xmark       & \xmark        & \xmark                   \\ \hline
 What currency is used internally?& ETH           & ETH, GET, Fiat    &  ETH, AVT    & Fiat, BOXX    & \begin{tabular}[c]{@{}c@{}}ETH,DAI,\\ USDT,OGN\end{tabular}\\ \hline
-End user payment currency?      & ETH            & Fiat              &  ETH         & Fiat          & -                         \\ \hline  
+End user payment currency?      & ETH            & Fiat              &  ETH         & Fiat          & ETH,DAI,USDT                         \\ \hline  
 Stablecoin integration?         & \xmark         & \xmark            & \xmark       & \xmark        & \cmark                   \\ \hline
 Fiat currency gateway?          & \xmark         & \xmark            & \xmark       & \xmark        & \xmark                   \\ \hline
-Fiat gateway provider           & -              & ?                 & \xmark       & \xmark        & paid promos             \\ \hline
-Event spam prevention           & \cmark         & \xmark            & \cmark       & \xmark        & -                       \\ \hline
+Fiat gateway provider           & \xmark              & ?                 & \xmark       & \xmark        & \xmark             \\ \hline
+Event spam prevention           & \cmark         & \xmark            & \cmark       & \xmark        & \xmark                       \\ \hline
 Can ticket be sold for less?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        & \cmark                   \\ \hline
 Can ticket be sold for more?    & \cmark         & \xmark            & \cmark/\xmark& \cmark        & \cmark                   \\ \hline
 Multiple tickets on account?    & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
-Metadata storage           & IPFS           & own Server        &      ?       & IPFS          & IPFS                    \\ \hline
+Metadata storage           & IPFS           & own server        &      ?       & IPFS          & IPFS                    \\ \hline
 Escrow account               & \xmark         &  ?                &      ?       & \xmark        & \cmark                   \\ \hline
 Mobile app available            & \cmark         & \cmark            & \xmark       & \cmark        & \cmark                   \\ \hline
 Web app available               & \cmark         & \cmark            &  \xmark      & \cmark        & \cmark                   \\ \hline
@@ -28,7 +49,7 @@ Who pays for transaction fees?  & user           & user              &  user    
 Affiliate marketing             & \xmark         & ?                 &  \cmark      & \cmark        & \xmark                   \\ \hline
 Fraud prevention?               & \cmark         & \cmark            &  \cmark      & \cmark        & \begin{tabular}[c]{@{}c@{}}reviews,\\ social profiles\end{tabular}\\ \hline
 Deposit for hosting an event?   & \cmark         & \cmark            & \cmark       & \cmark        & \cmark                   \\ \hline
-Off-chain ticket validation     & \xmark         & \cmark            &  ?           & ?             & -                       \\ \hline
+Off-chain ticket validation     & \xmark         & \cmark            &  ?           & ?             & \xmark                       \\ \hline
 Does it preserve privacy?       & \xmark         & \xmark            & \cmark       & \cmark        & \xmark                   \\ \hline
 Fee structure                   & paid promos    &  ?                &      ?       & ?             & paid promos             \\ \hline
 Second layer for scalablity?    & \xmark         &  \xmark           & \cmark       & \xmark        & \xmark               \\ \hline
@@ -40,4 +61,3 @@ Second layer for scalablity?    & \xmark         &  \xmark           & \cmark   
 
 
 \end{landscape}
-

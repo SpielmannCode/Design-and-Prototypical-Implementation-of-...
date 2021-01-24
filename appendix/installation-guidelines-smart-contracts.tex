@@ -1,5 +1,5 @@
 \section{Smart Contracts}
-The code for the SCs is available on Github\footnote{\url{https://github.com/bc-ticketing/idetix}}. The Truffle\footnote{\url{https://www.trufflesuite.com}} framework was used to build, test and deploy the smart contract. Truffle simplifies the process of deploying the contracts to a local Ethereum node or to any of the public testnets.
+The code for the SCs is available on GitHub\footnote{\href{https://github.com/bc-ticketing/idetix}{https://github.com/bc-ticketing/idetix}}. The Truffle\footnote{\href{https://www.trufflesuite.com}{https://www.trufflesuite.com}} framework was used to build, test and deploy the SC. Truffle simplifies the process of deploying the contracts to a local Ethereum node or to any of the public testnets.
 
 \subsection{Compilation}
 Truffle can also compile the contracts and generate the ABIs which are needed when integrating the contracts in another application.
@@ -13,14 +13,14 @@ This will generate or overwrite the existing folder called \textit{abi} in the r
 
 \subsection{Testing}
 
-In order to run the tests, a local Ethereum network can be created with Ganache\footnote{\url{https://www.trufflesuite.com/ganache}}. It is recommended to use \textit{ganache-cli} instead of their GUI application.
+In order to run the tests, a local Ethereum network can be created with Ganache\footnote{\href{https://www.trufflesuite.com/ganache}{https://www.trufflesuite.com/ganache}}. It is recommended to use \textit{ganache-cli} instead of their GUI application.
 
-\noindent To start a local Ethereum blockchain with Ganache run the following command:
+\noindent To start a local Ethereum BC with Ganache run the following command:
 \begin{lstlisting}[language=bash]
   $ ganache-cli --h 0.0.0.0
 \end{lstlisting}
 
-\noindent To run the tests against the local Ethereum blockchain:
+\noindent To run the tests against the local Ethereum BC:
 \begin{lstlisting}[language=bash]
   $ truffle test --network ganachecli
 \end{lstlisting}
@@ -37,9 +37,9 @@ Deploying the contracts to a (local) testnet or mainnet can be also be done with
 
 \subsubsection{Public Testnet}
 
-Deploying to a public testnet requires a connection to an Ethereum node of the desired network must be established. For this one can use Infura\footnote{\url{https://infura.io}} API. Furthermore, one must have an account with Ether to cover the deployment costs. There are multiple faucets for each of the public testnets that send free test ETH. 
+Deploying to a public testnet requires a connection to an Ethereum node of the desired network must be established. For this one can use Infura\footnote{\href{https://infura.io}{https://infura.io}} API. Furthermore, one must have an account with Ether to cover the deployment costs. There are multiple faucets for each of the public testnets that send free test ETH. 
 
-Also, an additional npm package\footnote{\url{https://www.npmjs.com/package/@truffle/hdwallet-provider}} is used to deploy the contracts. It enables Truffle to deploy to a public testnet by providing a mnemonic and a url to the Ethereum node.
+Also, an additional NPM package\footnote{\href{https://www.npmjs.com/package/@truffle/hdwallet-provider}{https://www.npmjs.com/package/@truffle/hdwallet-provider}} is used to deploy the contracts. It enables Truffle to deploy to a public testnet by providing a mnemonic and a URL to the Ethereum node.
 
 First, a local file in the root directory called \textit{.env} and past the correct values from Infura and your mnemonic.
 
