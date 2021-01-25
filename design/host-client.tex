@@ -54,7 +54,7 @@ Additional to that, the BC information of a ticket and the ticket's metadata whi
 
 To add a new ticket type to the event, this ticket summary component holds a button on the top right, which opens a ticket form. In this form, the host can set the metadata for a new ticket type as desired. There are just a few restrictions that arise from properties of the event or already existing ticket types, such as already used seats in the seating plan component, that may not be used for another ticket type. When saving a category, the selected seats of the seating plan component together with the filled out information in the ticket form are pre-saved and added to a list below as in Figure \ref{img:host-seating-plan}. A new submit button is now shown. With this button, the ticket types are created in one invocation on the event contract. Given the design choice in the SCs, ticket types with a presale require a separate invocation. This means, that if the pre-saved tickets contain both tickets with a presale and tickets without a presale, two invocations are required.
 
-\begin{figure}[hbt]
+\begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/host-seating-plan.png}
     \caption{Seating plan \protect}

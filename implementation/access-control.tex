@@ -8,7 +8,7 @@ The Access Control application is the backend in the access control design. It i
 This section describes the data model that was used to implement the access control functionality. The implementation contains two entities to store either terminal data or guest data.
 
 \subsubsection{Terminal}
-To achieve the specified functionality, the implementation of the required entities is needed. As the terminal need to register at the backend, they are saved as an entity. The Terminal is represented as described in the Java class shown in Figure \ref{code:entity:access}. As in the ID approver implementation (see Section \ref{imp:identity}), project lombok is used here as well.
+To achieve the specified functionality, the implementation of the required entities is needed. As the terminal needs to register at the backend, they are saved as an entity. The Terminal is represented as described in the Java class shown in Figure \ref{code:entity:access}. As in the ID approver implementation (see Section \ref{imp:identity}), project lombok is used here as well.
 
 \begin{figure}[H]
     \lstinputlisting[language=Java, linerange={13-33}]{code-snippets/TerminalEntity.java}
@@ -16,10 +16,10 @@ To achieve the specified functionality, the implementation of the required entit
     \label{code:entity:access}
 \end{figure}
 
-Each terminal is assigned a unique id whenever it registers at the backend. The string \textit{randId} is generated for every interaction with the guest. This is the random sequence that should be signed by the guest. The variable \textit{ticketType} can optionally be used to pass an array of ticket types, whenever a special type of ticket is required to access the area after the terminal. The \textit{areaAcessFrom} and \textit{areaAccessTo} variables are used to specify, from where a guest is coming and in what area a guest is after passing the terminal. \textit{numberOfTickets} refers to the amount of tickets the guest wants to use to enter and \textit{requestStatus} is used to represent, what state the terminal is currently in. The terminal can either not have requested a random sequence yet, hold a pending random sequence that has not been signed by a guest yet, have a request that has been evaluated to allow the guest to enter the venue or have the status of a denied request.
-The variable \textit{ethAddress} is set, whenever a guest successfully verified his ownership of the required amount of tickets. This is then used to insert the required database entries in the guest database. Since verifying the ownership over the tickets is done by calling a function from the guest-client, the terminal can only react to state changes. Therefore, the error message produced when trying to verify ownership of tickets is stored in the entity. This message can then be queried by the terminal to display a meaningful error message. 
+Each terminal is assigned a unique id whenever it registers at the backend. The string \textit{randId} is generated for every interaction with the guest. This is the random sequence that needs to be signed by the guest. The variable \textit{ticketType} can optionally be used to pass an array of ticket types, whenever a special type of ticket is required to access the area after the terminal. The \textit{areaAccessFrom} and \textit{areaAccessTo} variables are used to specify from where a guest is coming and in what area a guest is after passing the terminal. \textit{numberOfTickets} refers to the amount of tickets the guest wants to use to enter and \textit{requestStatus} is used to represent, what state the terminal is currently in. The terminal can either not have requested a random sequence yet, hold a pending random sequence that has not been signed by a guest yet, have a request that has been evaluated to allow the guest to enter the venue or have the status of a denied request.
+The variable \textit{ethAddress} is set, whenever a guest successfully verified his ownership of the required amount of tickets. This is then used to insert the required database entries in the guest database. Since verifying the ownership of the tickets is done by calling a function from the guest-client, the terminal can only react to state changes. Therefore, the error message produced when trying to verify ownership of tickets is stored in the entity. This message can then be queried by the terminal to display a meaningful error message. 
 
-The different request states and venue areas are defined using the Java construct enum as described in Figure \ref{code:enum:Venu} and Figure \ref{code:enum:Req}.
+The different request states and venue areas are defined using the Java construct enum as shown in Figure \ref{code:enum:Venu} and Figure \ref{code:enum:Req}.
 
 \begin{figure}[H]
     \lstinputlisting[language=Java]{code-snippets/VenueArea.java}
@@ -31,7 +31,7 @@ The different request states and venue areas are defined using the Java construc
 \end{figure}
 
 \subsubsection{Guest}
-To implement the data model of the guest, a composite key is needed as the primary key, since not only the guests Ethereum address, but also the \textit{venueArea}, in which the guest is located, has to be stored. This is done by creating a class that represents the composite primary key as described in Figure \ref{code:GuestID}. To use a class as primary key in a Spring Boot application in combination with JPA, it is necessary to override the equals() and hashCode() standard methods of a Java object, since these are used to check, whether two keys are describing the same record in the database.
+To implement the data model of the guest, a composite key is needed as the primary key, since not only the guest's Ethereum address, but also the \textit{venueArea}, in which the guest is located, has to be stored. This is done by creating a class that represents the composite primary key as described in Figure \ref{code:GuestID}. To use a class as primary key in a Spring Boot application in combination with JPA, it is necessary to override the equals() and hashCode() standard methods of a Java object, since these are used to check, whether two keys are describing the same record in the database.
 
 \begin{figure}[H]
     \lstinputlisting[language=Java, linerange={11-38} ]{code-snippets/GuestID.java}
@@ -40,7 +40,7 @@ To implement the data model of the guest, a composite key is needed as the prima
 \end{figure}
 
 
-This results in a very simple implementation of the guest entity consisting only of the composite key as already described and an integer to save the amount of guests that are in the area. This is implemented as described in Figure \ref{code:GuestEntity}.
+This results in a very simple implementation of the guest entity consisting only of the composite key as already described and an integer to save the amount of guests that are in the area. This is implemented as shown in Figure \ref{code:GuestEntity}.
 
 \begin{figure}[H]
     \lstinputlisting[language=Java, linerange={9-23} ]{code-snippets/GuestEntity.java}
@@ -50,7 +50,7 @@ This results in a very simple implementation of the guest entity consisting only
 
 \subsection{Repository and Controller}
 
-The repository and the controller components are implemented the same way as already described in Section \ref{imp:identity}. The only addition to those is that the repository interface for the terminal entity is extended by a function, which allows to find an terminal entity not by the primary key terminalId but by the randId. This is necessary since it was decided to not pass non-relevant data to the guest whenever he signs the random sequence. Therefore, the guest-client application will only know the random sequence and the backend URL, where it should send the request to. Given this, the backend needs to be able to identify the terminal by the randId. In JPA, this is achieved automatically by the right naming of a function as shown in Figure \ref{code:repo:terminal}. The keyword \textit{find} specifies to search for an entity in the database. The keyword \textit{By} specifies to use a filter and \textit{RandId} is the name of the field used to filter. Hence, a \textit{ randId} needs to be provided as parameter for this function.
+The repository and the controller components are implemented the same way as already described in Section \ref{imp:identity}. The only addition to those is that the repository interface for the terminal entity is extended by a function, which allows to find a terminal entity not by the primary key \textit{terminalId} but by the variable \textit{randId}. This is necessary since the design decision requires only to pass relevant data to the guest whenever he signs the random sequence. Therefore, the guest-client application will only know the random sequence and the backend URL, where it should send the request to. Given this, the backend needs to be able to identify the terminal by the variable \textit{randId}. In JPA, this is achieved automatically by the right naming of a function as shown in Figure \ref{code:repo:terminal}. The keyword \textit{find} specifies to search for an entity in the database. The keyword \textit{By} specifies to use a filter and \textit{RandId} is the name of the field used to filter. Hence, a \textit{ randId} needs to be provided as parameter for this function.
 
 \begin{figure}[H]
     \lstinputlisting[language=Java, linerange={10-12} ]{code-snippets/TerminalEntityRepository.java}
@@ -60,6 +60,6 @@ The repository and the controller components are implemented the same way as alr
 
 \subsection{Service}
 
-The main functionality of the application is implemented within the service classes. As already described in Section \ref{imp:identity}, the \textit{BlockchainServiceImp} class is used to communicate with the Ethereum BC.
-The verification of signatures is implemented in the \textit{security} class and the\textit{GuestEntityService} is used to change the guest database whenever a guest changes the venue area. 
+The main functionality of the application is implemented within the service classes. As already described in Section \ref{imp:identity}, the \textit{BlockchainServiceImpl} class is used to communicate with the Ethereum BC.
+The verification of signatures is implemented in the \textit{security} class and the \textit{GuestEntityService} is used to change the guest database whenever a guest changes the venue area. 
 Further, the class \textit{TerminalEntityService} provides all the functionality to the terminal and ultimately also the guest. It makes sure, that a ticket cannot be used multiple times to enter the event or a specific area.

@@ -17,11 +17,11 @@ At this moment the user can interact with the application in its full scope.
 
 \subsubsection{Warm Start}
 
-On later application starts, the IDB is queried for all event contract addresses received from the \textit{Event Factory} SC. If there is an entry for an address present, the application knows that it has already fetched the metadata from the BC. Thus only new events will require a full fetch. However as aforementioned, the metadata also includes information on the supply of tickets and the owned tickets of the user, which is subject of change. This means that the application needs a way of having the most up-to-date state of the SC at all time. The easiest way to ensure this would be to load the metadata for all events from their SC and IPFS hash also on warm starts. However, as discussed in the evaluation (Chapter \ref{section:eval-preloading}), this is not feasible due to high loading times even with a low number of events.
+On later application starts, the IDB is queried for all event contract addresses received from the \textit{Event Factory} SC. If there is an entry for an address present, the application knows that it has already fetched the metadata from the BC. Thus only new events will require a full fetch. However as aforementioned, the metadata also includes information on the supply of tickets and the owned tickets of the user, which is subject of change. This means that the application needs a way of having the most up-to-date state of the SC at all time. The easiest way to ensure this would be to load the metadata for all events from their SC and IPFS hash also on warm starts. However, as further discussed in the evaluation (Chapter \ref{section:eval-preloading}), this is not feasible due to high loading times even with a low number of events.
 
 This problem is solved using solidity events. SCs can emit events when one of their methods is invoked. These events contain an identifier (e.g. \textit{ticketBought}) and the relevant information, e.g. the buyers Ethereum address, the event contract address, and the ticket category. In most cases the client storage can be updated with only the information gathered from these events. These events are indexed with the block number of the BC at the time they were emitted.
 
-On a warm start, the application requests all solidity events from the \textit{lastFetchedBlock}. For each type of solidity event, it assigns the correct handler and updates the data models according to the information in the received event. This procedure is also shown in code snippet \ref{code:eventLoading}.
+On a warm start, the application requests all solidity events from the \textit{lastFetchedBlock}. For each type of solidity event, it assigns the correct handler and updates the data models according to the information in the received event. This procedure is also shown in the code snippet in Figure \ref{code:eventLoading}.
 
 \begin{figure}[hbt]
     \lstinputlisting[language=Java]{code-snippets/loadEvents.js}
@@ -36,7 +36,7 @@ On a warm start, the application requests all solidity events from the \textit{l
 \subsubsection{Live Updates}
 
 As described in the previous sections, the application fetches all data when it is served as either a conventional web page or a PWA. This however, can lead to incomplete data displayed to the user, if the user leaves the page open for an extended period of time without reloading it or in the case of an event with high demand and thus, a high number of people buying tickets concurrently. Also, if the user completes any action resulting in a different state of the BC himself (e.g. buying a ticket), the application should display this change immediately in order to prevent confusing the user on if the transaction actually succeeded. 
-\\
+
 To address the latter issue, the application triggers minor data fetches similar to a \textit{warm start}. The difference here being that only the data that has been changed for sure is being updated.
 
 \begin{figure}[hbt]
